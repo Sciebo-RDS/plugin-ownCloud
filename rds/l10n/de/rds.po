@@ -188,13 +188,6 @@ msgstr ""
 "Unten links kannst Du neue Dienste hinzufügen, falls Dir noch ein Dienst fehlt."
 
 #: templates/part.research.content.overview.php:1
-msgid "This is a nice text in overview"
-msgstr ""
-"Willkommen in deiner Forschungsübersicht. Links siehst Du alle bereits erstellten Forschungsprojekte. Klicke einen Dienst an, um ihn zu konfigurieren. Die drei Punkte an deiner Auswahl zeigen weitere Möglichkeiten an.\n"
-"\n"
-"Unten links kannst Du neue Dienste hinzufügen, falls Dir noch ein Dienst fehlt."
-
-#: templates/part.research.content.overview.php:1
 msgid "Welcome info"
 msgstr "Willkommensinfo"
 
