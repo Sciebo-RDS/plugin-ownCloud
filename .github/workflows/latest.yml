@@ -29,8 +29,8 @@ jobs:
         run: |
           curl https://download.owncloud.org/community/owncloud-complete-20200731.zip -o owncloud.zip
           unzip -qq owncloud.zip
-          php owncloud/occ integrity:sign-app --privateKey=rds.key --certificate=rds.crt --path="${PWD}/apps/rds"
-          php owncloud/occ integrity:check-app rds
+          php owncloud/occ integrity:sign-app --privateKey=${PWD}/rds.key --certificate=${PWD}/rds.crt --path="${PWD}/rds"
+          php owncloud/occ integrity:check-app ${PWD}/rds
       - name: Set env & pack
         run: |
           export RELEASE_VERSION=latest
