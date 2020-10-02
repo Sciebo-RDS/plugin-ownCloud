@@ -28,7 +28,7 @@ jobs:
       - name: "Signature code"
         run: |
           curl https://download.owncloud.org/community/owncloud-complete-20200731.zip -o owncloud.zip
-          unzip owncloud.zip -d owncloud
+          unzip -qq owncloud.zip
           php owncloud/occ integrity:sign-app --privateKey=rds.key --certificate=rds.crt --path="${PWD}/apps/rds"
           php owncloud/occ integrity:check-app rds
       - name: Set env & pack
