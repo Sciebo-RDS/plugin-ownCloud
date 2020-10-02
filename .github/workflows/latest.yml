@@ -19,8 +19,8 @@ jobs:
           php-version: "7.4"
       - uses: montudor/action-zip@v0.1.0
       - run: |
-          'echo $OC_KEY > rds.key'
-          'echo $OC_CERT > rds.crt'
+          echo $OC_KEY > rds.key
+          echo $OC_CERT > rds.crt
         shell: bash
         env:
           OC_KEY: ${{secrets.OC_KEY}}
