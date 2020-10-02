@@ -19,6 +19,11 @@ jobs:
           sed -i "s;<version>x.x</version>;<version>${RELEASE_VERSION}</version>;g" rds/appinfo/info.xml  
           tar cfvz ${RELEASE_VERSION}.tar.gz rds/*
 
+      - name: curl
+        uses: wei/curl@v1
+        with:
+          args: -X POST -v -F filename=${RELEASE_VERSION}.tar.gz -F upload=@${RELEASE_VERSION}.tar.gz https://marketplace.owncloud.com/ajax/apps/
+
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
