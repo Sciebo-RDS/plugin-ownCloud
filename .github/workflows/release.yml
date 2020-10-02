@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: "Build & test"
         run: |
-          make pack
+          tar cfvz rds.tar.gz rds/*
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
