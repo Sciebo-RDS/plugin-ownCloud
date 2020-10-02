@@ -201,11 +201,6 @@ msgid ""
 "Here you can enter all informations about your research synchronization."
 msgstr "Hier kannst Du Dein RDS Forschungsprojekt konfigurieren."
 
-#: templates/part.research.content.service.php:3
-msgid ""
-"Here you can enter all informations about your research synchronization."
-msgstr "Hier kannst Du dein RDS Forschungsprojekt konfigurieren."
-
 #: templates/part.research.content.service.php:13
 msgid "Please select a folder where you want to take your files from."
 msgstr ""
