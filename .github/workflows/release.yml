@@ -12,10 +12,9 @@ jobs:
     runs-on: "ubuntu-latest"
 
     steps:
-      # ...
       - name: "Build & test"
         run: |
-          echo "done!"
+          make pack
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
