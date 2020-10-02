@@ -12,7 +12,7 @@ jobs:
     runs-on: "ubuntu-latest"
 
     steps:
-      # ...
+      - uses: actions/checkout@v1
       - name: "Build & test"
         run: |
           export RELEASE_VERSION=${GITHUB_REF#refs/tags/v}
