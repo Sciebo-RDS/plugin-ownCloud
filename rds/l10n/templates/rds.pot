@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud Core 8.0.0\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2020-07-10 15:23+0200\n"
+"POT-Creation-Date: 2020-10-02 14:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,8 +25,8 @@ msgstr ""
 msgid "Your entries could not be saved."
 msgstr ""
 
-#: js/View.js:57 js/View.js:481 js/View.js:490 js/View.js:506 js/View.js:593
-#: js/View.js:615 js/View.js:633 js/main-rds.js:38
+#: js/View.js:57 js/View.js:482 js/View.js:491 js/View.js:507 js/View.js:594
+#: js/View.js:616 js/View.js:634 js/main-rds.js:38
 msgid "RDS Update project"
 msgstr ""
 
@@ -34,15 +34,19 @@ msgstr ""
 msgid "Choose source and / or target folder"
 msgstr ""
 
-#: js/View.js:480
+#: js/View.js:481
 msgid "Your files will be synchronize within 2 minutes."
 msgstr ""
 
-#: js/View.js:487
+#: js/View.js:488
 msgid "Are you sure, that you want to close the research {researchIndex}?"
 msgstr ""
 
-#: js/View.js:592 js/main-rds.js:37
+#: js/View.js:506
+msgid "Could not close this research."
+msgstr ""
+
+#: js/View.js:593 js/main-rds.js:37
 msgid "Could not create research"
 msgstr ""
 
@@ -148,7 +152,7 @@ msgstr ""
 #: templates/part.research.content.file.php:23
 #: templates/part.research.content.metadata.php:16
 #: templates/part.research.content.service.php:123
-#: templates/settings-admin.php:20
+#: templates/settings-admin.php:27
 msgid "Save"
 msgstr ""
 
@@ -263,7 +267,7 @@ msgstr ""
 msgid "Add research"
 msgstr ""
 
-#: templates/part.research.settings.php:9
+#: templates/part.research.settings.php:7
 msgid "Add missing service"
 msgstr ""
 
@@ -283,6 +287,16 @@ msgstr ""
 msgid ""
 "Specify here the URL, where the ownCloud instance can find your RDS instance "
 "e.g. https://url-to-rds-in-k8s. Please leave out the trailing slash."
+msgstr ""
+
+#: templates/settings-admin.php:21
+msgid "name of oauth credentials"
+msgstr ""
+
+#: templates/settings-admin.php:23
+msgid ""
+"Specify here the name of the oauth, which you entered in your ownCloud "
+"instance for user oauth authentification. It needs to be the same."
 msgstr ""
 
 #: templates/settings-personal.php:45 templates/settings-personal.php:45
