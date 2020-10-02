@@ -13,6 +13,24 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+      - uses: wei/curl@master
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.4"
+      - uses: montudor/action-zip@v0.1.0
+      - run: |
+          'echo "$OC_KEY" > rds.key'
+          'echo "$OC_CERT" > rds.crt'
+        shell: bash
+        env:
+          OC_KEY: ${{secrets.OC_KEY}}
+          OC_CERT: ${{secrets.OC_CERT}}
+      - name: "Signature code"
+        run: |
+          curl https://download.owncloud.org/community/owncloud-complete-20200731.zip -o owncloud.zip
+          unzip owncloud.zip -d owncloud
+          php owncloud/occ integrity:sign-app --privateKey=rds.key --certificate=rds.crt --path="${PWD}/apps/rds"
+          php owncloud/occ integrity:check-app rds
       - name: Set env & pack
         run: |
           export RELEASE_VERSION=latest
