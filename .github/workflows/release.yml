@@ -12,10 +12,12 @@ jobs:
     runs-on: "ubuntu-latest"
 
     steps:
-      - name: "Build & test"
+      - uses: actions/checkout@v1
+      - name: Set env & pack
         run: |
-          tar cfvz rds.tar.gz rds/*
-
+          export RELEASE_VERSION=${GITHUB_REF#refs/tags/}
+          sed -i "s;<version>x.x</version>;<version>${RELEASE_VERSION}</version>;g" rds/appinfo/info.xml  
+          tar cfvz ${RELEASE_VERSION}.tar.gz rds/*
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
