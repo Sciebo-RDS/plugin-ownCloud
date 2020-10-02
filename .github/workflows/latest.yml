@@ -16,7 +16,7 @@ jobs:
       - name: Set env & pack
         run: |
           export RELEASE_VERSION=latest
-          sed -i "s;<version>x.x</version>;<version>${RELEASE_VERSION}</version>;g" rds/appinfo/info.xml  
+          sed -i "s;<version>x.x</version>;<version>0.0</version>;g" rds/appinfo/info.xml  
           tar cfvz ${RELEASE_VERSION}.tar.gz rds/*
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
