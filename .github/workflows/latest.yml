@@ -1,29 +1,29 @@
-
 ---
-name: "tagged-release"
+name: "pre-release"
 
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - "master"
 
 jobs:
-  tagged-release:
-    name: "Tagged Release"
+  pre-release:
+    name: "Pre Release"
     runs-on: "ubuntu-latest"
 
     steps:
-      # ...
-      - name: "Build & test"
+      - uses: actions/checkout@v1
+      - name: Set env & pack
         run: |
-          export RELEASE_VERSION=${GITHUB_REF#refs/tags/v}
+          export RELEASE_VERSION=latest
           sed -i "s;<version>x.x</version>;<version>${RELEASE_VERSION}</version>;g" rds/appinfo/info.xml  
           tar cfvz ${RELEASE_VERSION}.tar.gz rds/*
-
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
           files: |
             LICENSE.txt
-            *.tar.gz
+            latest.tar.gz
