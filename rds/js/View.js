@@ -272,7 +272,7 @@
       }
     })
 
-    return $.when(deferreds).done(function (projectList) {
+    return $.when.apply($, deferreds).done(function (projectList) {
       projectList.forEach(function (project) {
         var servicePort = {
           port: project.portName,
