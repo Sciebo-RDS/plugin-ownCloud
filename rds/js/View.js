@@ -265,8 +265,11 @@
 
     $(".metadata-service input").each(function (index, obj) {
       var $this = $(obj)
-      var servicename = $this.data("value")
-      deferreds.push(self._services.createProject(servicename))
+      var servicename = $this.data("service")
+
+      if($this.is(":checked")) {
+        deferreds.push(self._services.createProject(servicename))
+      }
     })
 
     return $.when(deferreds).done(function (projectList) {
