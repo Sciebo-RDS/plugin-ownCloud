@@ -22,7 +22,6 @@
       <?php p($l->t('Please select all services, which you want to use for your synchronization.')); ?>
       <div class="metadata-wrapper">
         {{#each services}}
-        {{#if (eq servicename "Owncloud")}}
           <div class="metadata-service">
             <label>
               <input
@@ -35,7 +34,6 @@
               {{ servicename }}
             </label>
           </div>
-        {{/if}}
         {{/each}}
       </div>
 </div>

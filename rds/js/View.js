@@ -173,24 +173,6 @@
       return newServices;
     };
 
-    function staticServices(services, research) {
-      var newServices = JSON.parse(JSON.stringify(services));
-
-      newServices.forEach(function (service, indexSvc) {
-        if (service.servicename === "Owncloud") {
-          this[indexSvc].fileStorageChecked = "checked";
-          this[indexSvc].importChecked = "checked";
-        }
-
-        if (service.servicename === "Zenodo") {
-          this[indexSvc].metadataChecked = "checked";
-          this[indexSvc].exportChecked = "checked";
-        }
-      }, newServices);
-
-      return newServices;
-    }
-
     var studies = this._studies.getActive();
     var services;
 
@@ -198,12 +180,19 @@
       services = [];
     } else {
       services = patchServices(this._services.getAll(), studies);
-      services = staticServices(services, studies);
+
+      newServicesList = [];
+      for (let index = 0; index < services.length; index++) {
+        const element = services[index];
+        if (element.servicename != "Owncloud") {
+          newServicesList.push(element)
+        }
+      }
     }
 
     return {
       research: studies,
-      services: services,
+      services: newServicesList,
     };
   };
   OC.rds.WorkflowTemplate.prototype._beforeTemplateRenders = function () { };
