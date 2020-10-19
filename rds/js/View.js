@@ -263,7 +263,7 @@
 
     var deferreds = []
 
-    $("metadata-service input").each(function (index, obj) {
+    $(".metadata-service input").each(function (index, obj) {
       var $this = $(obj)
       var servicename = $this.data("value")
       deferreds.push(self._services.createProject(servicename))
