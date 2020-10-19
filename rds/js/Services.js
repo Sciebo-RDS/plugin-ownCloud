@@ -46,7 +46,7 @@
     getServices: function () {
       return this._services;
     },
-    createProject(servicename) {
+    createProject: function (servicename) {
       var deferred = $.Deferred();
       var self = this;
 

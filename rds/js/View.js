@@ -267,7 +267,7 @@
       var $this = $(obj)
       var servicename = $this.data("service")
 
-      if($this.is(":checked")) {
+      if ($this.is(":checked")) {
         deferreds.push(self._services.createProject(servicename))
       }
     })
@@ -292,6 +292,7 @@
         };
         portOut.push(servicePort);
       })
+
       return self._studies.updateActive(portIn, portOut)
     })
   };
