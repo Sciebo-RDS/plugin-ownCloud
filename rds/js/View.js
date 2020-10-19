@@ -272,27 +272,25 @@
       }
     })
 
-    return $.when.apply($, deferreds).done(function (projectList) {
-      projectList.forEach(function (project) {
-        var servicePort = {
-          port: project.portName,
-          properties: [
-            {
-              portType: "metadata",
-              value: true
-            },
-            {
-              portType: "customProperties",
-              value: [{
-                key: "projectId",
-                value: project.projectId
-              }],
-            }
-          ]
-        };
-        portOut.push(servicePort);
-      })
-
+    return $.when.apply($, deferreds).done(function (project) {
+      var servicePort = {
+        port: project.portName,
+        properties: [
+          {
+            portType: "metadata",
+            value: true
+          },
+          {
+            portType: "customProperties",
+            value: [{
+              key: "projectId",
+              value: project.projectId
+            }],
+          }
+        ]
+      };
+      portOut.push(servicePort);
+    }).done(function () {
       return self._studies.updateActive(portIn, portOut)
     })
   };
