@@ -181,7 +181,7 @@
     } else {
       services = patchServices(this._services.getAll(), studies);
 
-      newServicesList = [];
+      var newServicesList = [];
       for (let index = 0; index < services.length; index++) {
         const element = services[index];
         if (element.servicename != "Owncloud") {
