@@ -182,10 +182,12 @@
       services = patchServices(this._services.getAll(), studies);
 
       var newServicesList = [];
+      var filepath = undefined;
       for (let index = 0; index < services.length; index++) {
         const element = services[index];
-        if (element.servicename != "Owncloud") {
+        if (element.servicename !== "Owncloud") {
           newServicesList.push(element)
+          filepath = element.filepath
         }
       }
     }
@@ -193,6 +195,7 @@
     return {
       research: studies,
       services: newServicesList,
+      filepath: filepath
     };
   };
   OC.rds.WorkflowTemplate.prototype._beforeTemplateRenders = function () { };
@@ -202,15 +205,14 @@
     var btn = $("#btn-open-folderpicker");
     var servicename = btn.data("service");
 
-    $("[class=service-configuration]").hide();
+    //$("[class=service-configuration]").hide();
     //$("#btn-save-research-and-continue").hide();
     //$("#btn-sync-files-in-research").hide();
 
     btn.click(function () {
       OC.dialogs.filepicker(
-        t("files", "Choose source and / or target folder"),
+        t("files", "Choose source folder"),
         function (targetPath, type) {
-          $("#fileStorage-path-" + servicename).html(targetPath);
           self._services.getAll().forEach(function (element, index) {
             if (element.servicename === servicename) {
               this[index].filepath = targetPath.trim();
