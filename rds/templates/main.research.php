@@ -26,7 +26,7 @@ script('rds', array('Studies', 'Metadata', 'Services', 'View', 'Files', 'main-rd
     ?>
 </script>
 
-<script id='research-edit-file-tpl' type='text/x-handlebars-template'>
-    <?php print_unescaped($this->inc('part.research.content.file'));
+<script id='research-workflow-tpl' type='text/x-handlebars-template'>
+    <?php print_unescaped($this->inc('part.research.content.workflow'));
     ?>
 </script>
