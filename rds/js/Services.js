@@ -46,5 +46,28 @@
     getServices: function () {
       return this._services;
     },
+    createProject(servicename) {
+      var deferred = $.Deferred();
+      var self = this;
+
+      $.ajax({
+        url: OC.generateUrl(
+          "/apps/rds/userservice/" + servicename + "/projects"
+        ),
+        method: "POST",
+      })
+        .done(function (proj) {
+          console.log(proj);
+          var data = {
+            portName: "port-" + servicename.toLowerCase(),
+            projectId: proj.projectId
+          }
+          deferred.resolve(data);
+        })
+        .fail(function () {
+          deferred.reject();
+        });
+      return deferred.promise();
+    }
   };
 })(OC, window, jQuery);

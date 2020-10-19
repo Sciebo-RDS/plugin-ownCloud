@@ -29,6 +29,7 @@
                 name="checkbox-{{ servicename }}-property"
                 id="checkbox-{{ servicename }}-metadata"
                 data-value="metadata"
+                data-service="{{ servicename }}"
                 {{ metadataChecked }}
               />
               {{ servicename }}

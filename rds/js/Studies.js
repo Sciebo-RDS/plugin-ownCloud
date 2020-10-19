@@ -32,7 +32,7 @@
       return this._metadata.load(this._activeResearch.researchIndex);
     },
 
-    publishActive: function(){
+    publishActive: function () {
       var index = undefined;
       var deferred = $.Deferred();
       var researchIndex = this._activeResearch.researchIndex;
@@ -163,6 +163,8 @@
       conn.portIn = portIn;
       conn.portOut = portOut;
       conn.status = 2;
+
+      console.log(conn)
 
       this._activeResearch = conn;
 
