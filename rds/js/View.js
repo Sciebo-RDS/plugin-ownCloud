@@ -187,6 +187,7 @@
         const element = services[index];
         if (element.servicename !== "Owncloud") {
           newServicesList.push(element)
+        } else {
           filepath = element.filepath
         }
       }
