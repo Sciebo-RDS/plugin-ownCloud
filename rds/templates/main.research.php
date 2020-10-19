@@ -26,16 +26,6 @@ script('rds', array('Studies', 'Metadata', 'Services', 'View', 'Files', 'main-rd
     ?>
 </script>
 
-<script id='research-edit-service-tpl' type='text/x-handlebars-template'>
-    <?php print_unescaped($this->inc('part.research.content.service'));
-    ?>
-</script>
-
-<script id='research-edit-metadata-tpl' type='text/x-handlebars-template'>
-    <?php print_unescaped($this->inc('part.research.content.metadata'));
-    ?>
-</script>
-
 <script id='research-edit-file-tpl' type='text/x-handlebars-template'>
     <?php print_unescaped($this->inc('part.research.content.file'));
     ?>

@@ -63,7 +63,6 @@
       var self = this;
 
       return this.save().done(function () {
-        self._view._stateView += 1;
         self._view.render();
       });
     },
@@ -95,20 +94,20 @@
     $.when();
   };
 
-  OC.rds.ServiceTemplate = function (divName, view, services, studies) {
+  OC.rds.WorkflowTemplate = function (divName, view, services, studies) {
     OC.rds.AbstractTemplate.call(this, divName, view);
 
     this._services = services;
     this._studies = studies;
   };
 
-  OC.rds.ServiceTemplate.prototype = Object.create(
+  OC.rds.WorkflowTemplate.prototype = Object.create(
     OC.rds.AbstractTemplate.prototype,
     {
-      constructor: OC.rds.ServiceTemplate,
+      constructor: OC.rds.WorkflowTemplate,
     }
   );
-  OC.rds.ServiceTemplate.prototype._getParams = function () {
+  OC.rds.WorkflowTemplate.prototype._getParams = function () {
     var self = this;
 
     var patchServices = function (services, research) {
@@ -207,8 +206,8 @@
       services: services,
     };
   };
-  OC.rds.ServiceTemplate.prototype._beforeTemplateRenders = function () { };
-  OC.rds.ServiceTemplate.prototype._afterTemplateRenders = function () {
+  OC.rds.WorkflowTemplate.prototype._beforeTemplateRenders = function () { };
+  OC.rds.WorkflowTemplate.prototype._afterTemplateRenders = function () {
     var self = this;
 
     var btn = $("#btn-open-folderpicker");
@@ -246,7 +245,7 @@
     });
   };
 
-  OC.rds.ServiceTemplate.prototype._saveFn = function () {
+  OC.rds.WorkflowTemplate.prototype._saveFn = function () {
     var self = this;
     self.data = {};
 
@@ -389,134 +388,6 @@
     });
   };
 
-  OC.rds.MetadataTemplate = function (divName, view, studies, services) {
-    OC.rds.AbstractTemplate.call(this, divName, view);
-
-    this._studies = studies;
-    this._services = services;
-    this._bf = undefined;
-  };
-
-  OC.rds.MetadataTemplate.prototype = Object.create(
-    OC.rds.AbstractTemplate.prototype,
-    {
-      constructor: OC.rds.MetadataTemplate,
-    }
-  );
-  OC.rds.MetadataTemplate.prototype._beforeTemplateRenders = function () { };
-  OC.rds.MetadataTemplate.prototype._afterTemplateRenders = function () {
-    var self = this;
-
-    this._studies.loadMetadata().done(function () {
-      var data = self._studies._metadata.getMetadata()[0]["metadata"];
-      console.log(data);
-
-      var BrutusinForms = brutusin["json-forms"];
-      self._bf = BrutusinForms.create(self._studies._metadata.getSchema());
-      var container = document.getElementById("metadata-jsonschema-editor");
-      container.innerHTML = "";
-      self._bf.render(container, data);
-    });
-
-    $("#app-content-wrapper #btn-save-metadata").click(function () {
-      self.save();
-    });
-
-    $("#app-content-wrapper #btn-save-metadata-and-continue").click(function () {
-      self.save_next();
-    });
-
-    $("#app-content-wrapper #btn-skip").click(function () {
-      self._view._stateView += 1;
-      self._view.render();
-    });
-  };
-  OC.rds.MetadataTemplate.prototype._getParams = function () { };
-  OC.rds.MetadataTemplate.prototype._saveFn = function () {
-    var self = this;
-    if (self._bf === undefined || !self._bf.validate()) {
-      var deferred = $.Deferred();
-      deferred.reject();
-      return deferred.promise();
-    }
-
-    return self._studies._metadata.update(self._bf.getData()).done(function () { self._services.loadUser() });
-  };
-
-  OC.rds.FileTemplate = function (divName, view, services, studies, files) {
-    OC.rds.AbstractTemplate.call(this, divName, view);
-    this._services = services;
-    this._studies = studies;
-    this._files = files;
-  };
-  OC.rds.FileTemplate.prototype = Object.create(
-    OC.rds.AbstractTemplate.prototype,
-    {
-      constructor: OC.rds.FileTemplate,
-    }
-  );
-
-  OC.rds.FileTemplate.prototype._beforeTemplateRenders = function () {
-    this._files.load(this._studies.getActive().researchIndex);
-  };
-  OC.rds.FileTemplate.prototype._afterTemplateRenders = function () {
-    var self = this;
-
-    $(".wrapper-auto-upload").hide();
-    $(".wrapper-apply-changes").hide();
-    $("#btn-save-files").hide();
-
-    $("#btn-save-files").click(function () {
-      self.save();
-    });
-
-    $("#btn-sync-files").click(function () {
-
-      self._view._files.load(self._studies.getActive().researchIndex);
-      self._view._files.triggerSync().done(function () {
-        console.log("done")
-      });
-
-      OC.dialogs.alert(
-        t("rds", "Your files will be synchronize within 2 minutes."),
-        t("rds", "RDS Update project")
-      );
-    });
-
-    $("#btn-finish-research").click(function () {
-      OC.dialogs.confirm(
-        t("rds", "Are you sure, that you want to close the research {researchIndex}?", {
-          researchIndex: self._studies.getActive().researchIndex + 1,
-        }),
-        t("rds", "RDS Update project"),
-        function (confirmation) {
-          {
-            if (confirmation == false) {
-              return;
-            }
-
-            self._studies
-              .publishActive()
-              .done(function () {
-                self._view._stateView = 0;
-                self._view.render();
-              })
-              .fail(function () {
-                OC.dialogs.alert(
-                  t("rds", "Could not close this research."),
-                  t("rds", "RDS Update project")
-                );
-              });
-          }
-        }
-      );
-    });
-  };
-  OC.rds.FileTemplate.prototype._getParams = function () { };
-  OC.rds.FileTemplate.prototype._saveFn = function () {
-    return $.when();
-  };
-
   OC.rds.View = function (studies, services, files) {
     this._studies = studies;
     this._services = services;
@@ -530,24 +401,11 @@
         this._services,
         this._studies
       ),
-      new OC.rds.ServiceTemplate(
-        "#research-edit-service-tpl",
+      new OC.rds.WorkflowTemplate(
+        "#research-workflow-tpl",
         this,
         this._services,
         this._studies
-      ),
-      new OC.rds.MetadataTemplate(
-        "#research-edit-metadata-tpl",
-        this,
-        this._studies,
-        this._services
-      ),
-      new OC.rds.FileTemplate(
-        "#research-edit-file-tpl",
-        this,
-        this._services,
-        this._studies,
-        this._files
       ),
     ];
   };
