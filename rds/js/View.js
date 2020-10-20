@@ -211,7 +211,7 @@
               this[index].filepath = targetPath.trim();
             }
           }, self._services.getAll());
-          self._view.render();
+          $("fileStorage-path-Owncloud").html(targetPath.trim());
         },
         false,
         "httpd/unix-directory",
@@ -221,7 +221,9 @@
 
 
     $("#app-content-wrapper #btn-save-research").click(function () {
-      self.save()
+      self.save().done(function () {
+        self._view.render();
+      })
     });
 
     $("#app-content-wrapper #btn-save-research-and-continue").click(function () {

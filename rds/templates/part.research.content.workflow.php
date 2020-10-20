@@ -8,14 +8,14 @@
       </p>
       <div class="fileStorage-wrapper">
         <label><button id="btn-open-folderpicker" data-service="Owncloud"><?php p($l->t('Select folder')); ?></button>
-          {{#if filepath }}
-            <?php p($l->t('Current path:')); ?>
-            <span id="fileStorage-path-Owncloud">
-                {{filepath}}
-            </span>
-          {{else}}
-            <?php p($l->t('No path currently selected.')); ?>
-          {{/if}}
+          <span id="fileStorage-path-Owncloud">
+            {{#if filepath }}
+              <?php p($l->t('Current path:')); ?>
+                  {{filepath}}
+            {{else}}
+              <?php p($l->t('No path currently selected.')); ?>
+            {{/if}}
+          </span>
         </label>
       </div>
 
