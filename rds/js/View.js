@@ -143,15 +143,6 @@
               if (val.key === "filepath") {
                 this[indexSvc].filepath = val.value;
               }
-
-              service.serviceProjects.forEach(function (proj, indexProj) {
-                if (
-                  val.key === "projectId" &&
-                  val.value === proj.metadata.prereserve_doi.recid.toString()
-                ) {
-                  this[indexSvc].serviceProjects[indexProj].checked = "checked";
-                }
-              }, this);
             }, this);
           }
         }
