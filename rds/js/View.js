@@ -291,7 +291,7 @@
             portType: "customProperties",
             value: [{
               key: "projectId",
-              value: project.projectId
+              value: project.projectId.toString()
             }],
           }
         ]
