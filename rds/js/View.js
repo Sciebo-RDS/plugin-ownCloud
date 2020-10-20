@@ -174,7 +174,9 @@
         if (element.servicename !== "Owncloud") {
           newServicesList.push(element)
         } else {
-          filepath = element.filepath
+          if (element.filepath !== undefined) {
+            filepath = element.filepath
+          }
         }
       }
     }
@@ -256,6 +258,24 @@
 
       if ($this.is(":checked") && prechecked === undefined) {
         deferreds.push(self._services.createProject(servicename))
+      } else {
+        var servicePort = {
+          port: servicename,
+          properties: [
+            {
+              portType: "metadata",
+              value: true
+            },
+            {
+              portType: "customProperties",
+              value: [{
+                key: "projectId",
+                value: prechecked
+              }],
+            }
+          ]
+        };
+        portOut.push(servicePort);
       }
     })
 
