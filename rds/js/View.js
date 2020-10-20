@@ -141,7 +141,7 @@
           if (prop.portType === "customProperties") {
             prop.value.forEach(function (val) {
               if (val.key === "projectId") {
-                this[indexSvc].projectId = val.value;
+                this[indexSvc].projectId = val.value.toString();
               }
               if (val.key === "filepath") {
                 this[indexSvc].filepath = val.value;
@@ -274,7 +274,7 @@
               portType: "customProperties",
               value: [{
                 key: "projectId",
-                value: prechecked
+                value: prechecked.toString()
               }],
             }
           ]
