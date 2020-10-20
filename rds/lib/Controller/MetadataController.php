@@ -94,4 +94,20 @@ class MetadataController extends Controller
         return $this->service->jsonschema();
     }
 
+    /**
+     * Trigger RDS System to update metadata in services
+     *
+     * @param integer $id
+     * @return string returns the updated object as json
+     *
+     * @NoAdminRequired
+     */
+    public function triggerMetadata($id) {
+        return $this->handleNotFound(function () use ($id) {
+            return $this->service->triggerUpdate($this->userId, $id);
+        });
+    }
+
+    
+
 }

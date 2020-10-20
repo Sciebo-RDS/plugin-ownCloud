@@ -51,6 +51,28 @@ class MetadataMapper
     throw new NotFoundException('No metadata for ' . $port . ' found.');
   }
 
+  public function triggerUpdate($userId, $researchIndex)
+  {
+    $curl = curl_init($this->urlService->getMetadataURL() . '/user/' . $userId . '/research/' . $researchIndex);
+    $options = [CURLOPT_RETURNTRANSFER => true];
+    curl_setopt_array($curl, $options);
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PATCH');
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+    // Set the content type to application/json
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+
+    $response = json_decode(curl_exec($curl));
+    $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    curl_close($curl);
+
+    if ($httpcode >= 300) {
+      return NULL;
+    }
+
+    return true;
+  }
+
   public function jsonschema()
   {
     return json_encode([

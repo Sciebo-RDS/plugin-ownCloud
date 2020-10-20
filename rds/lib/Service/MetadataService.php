@@ -60,6 +60,15 @@ class MetadataService
         }
     }
 
+    public function triggerUpdate($userId, $researchIndex)
+    {
+        try {
+            return $this->mapper->triggerUpdate($userId, $researchIndex);
+        } catch (Exception $e) {
+            $this->handleException($e);
+        }
+    }
+
     public function jsonschema()
     {
         try {
