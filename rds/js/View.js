@@ -285,6 +285,9 @@
     })
 
     return $.when.apply($, deferreds).done(function (project) {
+      if (project === undefined) {
+        return
+      }
       var servicePort = {
         port: project.portName,
         properties: [
