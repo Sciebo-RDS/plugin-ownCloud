@@ -133,7 +133,6 @@
         function patchProperty(prop) {
           if (prop.portType === "metadata" && prop.value === true) {
             this[indexSvc].metadataChecked = "checked";
-            this[indexSvc].projectId = prop.projectId;
           }
           if (prop.portType === "fileStorage" && prop.value === true) {
             this[indexSvc].fileStorageChecked = "checked";
@@ -141,6 +140,9 @@
 
           if (prop.portType === "customProperties") {
             prop.value.forEach(function (val) {
+              if (val.key === "projectId") {
+                this[indexSvc].projectId = val.value;
+              }
               if (val.key === "filepath") {
                 this[indexSvc].filepath = val.value;
               }
@@ -148,16 +150,8 @@
           }
         }
 
-        var port = findPort(service.servicename, research.portIn);
-        if (port !== undefined) {
-          this[indexSvc].importChecked = "checked";
-
-          port.properties.forEach(patchProperty, this);
-        }
-
         port = findPort(service.servicename, research.portOut);
         if (port !== undefined) {
-          this[indexSvc].exportChecked = "checked";
           port.properties.forEach(patchProperty, this);
         }
       }, newServices);
