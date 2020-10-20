@@ -60,7 +60,8 @@
           console.log(proj);
           var data = {
             portName: "port-" + servicename.toLowerCase(),
-            projectId: proj.projectId
+            projectId: proj.projectId,
+            servicename: servicename
           }
           deferred.resolve(data);
         })
