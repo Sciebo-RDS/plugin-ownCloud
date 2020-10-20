@@ -133,6 +133,7 @@
         function patchProperty(prop) {
           if (prop.portType === "metadata" && prop.value === true) {
             this[indexSvc].metadataChecked = "checked";
+            this[indexSvc].projectId = prop.projectId;
           }
           if (prop.portType === "fileStorage" && prop.value === true) {
             this[indexSvc].fileStorageChecked = "checked";
@@ -257,8 +258,9 @@
     $(".metadata-service input").each(function (index, obj) {
       var $this = $(obj)
       var servicename = $this.data("service")
+      var prechecked = $this.data("projectid")
 
-      if ($this.is(":checked")) {
+      if ($this.is(":checked") && prechecked === undefined) {
         deferreds.push(self._services.createProject(servicename))
       }
     })

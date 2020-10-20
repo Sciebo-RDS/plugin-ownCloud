@@ -30,6 +30,9 @@
                 id="checkbox-{{ servicename }}-metadata"
                 data-value="metadata"
                 data-service="{{ servicename }}"
+                {{#if projectId}}
+                data-projectid="{{ projectId }}"
+                {{/if}}
                 {{ metadataChecked }}
               />
               {{ servicename }}
