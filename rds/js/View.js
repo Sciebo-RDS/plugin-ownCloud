@@ -265,7 +265,7 @@
       if ($this.is(":checked")) {
         if (prechecked === undefined) {
           var event = self._services.createProject(servicename)
-          event.done(function () {
+          event.done(function (project) {
             if (project === undefined) {
               return
             }
