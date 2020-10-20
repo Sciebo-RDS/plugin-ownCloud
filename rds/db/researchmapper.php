@@ -157,6 +157,8 @@ class ResearchMapper
             if (!$found) {
                 $returnList[] = $index;
             }
+
+            $index++;
         }
 
         return $returnList;
