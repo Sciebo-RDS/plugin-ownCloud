@@ -263,7 +263,7 @@
       if ($this.is(":checked") && prechecked === undefined) {
         deferreds.push(self._services.createProject(servicename))
       }
-      if (!$this.is(":checked") && prechecked !== undefined) {
+      if ($this.is(":checked") && prechecked !== undefined) {
         var servicePort = {
           port: "port-" + servicename.toLowerCase(),
           properties: [
