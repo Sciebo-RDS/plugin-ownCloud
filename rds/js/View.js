@@ -260,27 +260,28 @@
       var servicename = $this.data("service")
       var prechecked = $this.data("projectid")
 
-      if ($this.is(":checked") && prechecked === undefined) {
-        deferreds.push(self._services.createProject(servicename))
-      }
-      if ($this.is(":checked") && prechecked !== undefined) {
-        var servicePort = {
-          port: "port-" + servicename.toLowerCase(),
-          properties: [
-            {
-              portType: "metadata",
-              value: true
-            },
-            {
-              portType: "customProperties",
-              value: [{
-                key: "projectId",
-                value: prechecked.toString()
-              }],
-            }
-          ]
-        };
-        portOut.push(servicePort);
+      if ($this.is(":checked")) {
+        if (prechecked === undefined) {
+          deferreds.push(self._services.createProject(servicename))
+        } else {
+          var servicePort = {
+            port: "port-" + servicename.toLowerCase(),
+            properties: [
+              {
+                portType: "metadata",
+                value: true
+              },
+              {
+                portType: "customProperties",
+                value: [{
+                  key: "projectId",
+                  value: prechecked.toString()
+                }],
+              }
+            ]
+          };
+          portOut.push(servicePort);
+        }
       }
     })
 
