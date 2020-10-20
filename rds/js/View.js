@@ -211,7 +211,7 @@
               this[index].filepath = targetPath.trim();
             }
           }, self._services.getAll());
-          $("#filepath").html('<span id="fileStorage-path-Owncloud">' + t("rds", "Current path:") + " " + targetPath.trim() + '</span>')
+          $("#filepath").html(t("rds", "Current path:") + ' ' + '<span id="fileStorage-path-Owncloud">' + targetPath.trim() + '</span>')
         },
         false,
         "httpd/unix-directory",
