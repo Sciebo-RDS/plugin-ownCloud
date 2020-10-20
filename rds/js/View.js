@@ -291,8 +291,7 @@
       if (project === undefined) {
         return
       }
-      $("#checkbox-" + project.servicename + "-metadata").data("projectid", project.projectId.toString())
-      
+            
       var servicePort = {
         port: project.portName,
         properties: [
