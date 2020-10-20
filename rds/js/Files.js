@@ -44,6 +44,29 @@
         });
       return deferred.promise();
     },
+    triggerMetadataSync: function() {
+      var deferred = $.Deferred();
+
+      if (this._currentResearch === undefined) {
+        deferred.reject();
+        return deferred.promise();
+      }
+
+      $.ajax({
+        type: "POST",
+        url: OC.generateUrl(
+          "/apps/rds/research/" + this._activeResearchId + "/metadata"
+        ),
+        dataType: "json",
+      })
+        .done(function () {
+          deferred.resolve();
+        })
+        .fail(function () {
+          deferred.reject();
+        });
+      return deferred.promise();
+    },
     triggerUpload: function (filename) {
       var deferred = $.Deferred();
 
