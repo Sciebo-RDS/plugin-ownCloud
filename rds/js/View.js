@@ -150,7 +150,11 @@
           }
         }
 
-        var port = findPort(service.servicename, research.portOut);
+        var port = findPort(service.servicename, research.portIn);
+        if (port !== undefined) {
+          port.properties.forEach(patchProperty, this);
+        }
+        port = findPort(service.servicename, research.portOut);
         if (port !== undefined) {
           port.properties.forEach(patchProperty, this);
         }
