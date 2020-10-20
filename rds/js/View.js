@@ -264,7 +264,7 @@
         deferreds.push(self._services.createProject(servicename))
       } else {
         var servicePort = {
-          port: servicename,
+          port: "port-" + servicename.toLowerCase(),
           properties: [
             {
               portType: "metadata",
