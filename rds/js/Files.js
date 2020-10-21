@@ -55,7 +55,7 @@
       $.ajax({
         type: "POST",
         url: OC.generateUrl(
-          "/apps/rds/research/" + this._activeResearchId + "/metadata"
+          "/apps/rds/research/" + this._currentResearch + "/metadata"
         ),
         dataType: "json",
       })
