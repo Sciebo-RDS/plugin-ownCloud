@@ -236,13 +236,14 @@
               return;
             }
 
-            self._view._files.load(self._studies.getActive().researchIndex);
-            $.when.apply([self._view._files.triggerSync(), self._view._files.triggerMetadataSync()]).done(function () {
-              OC.dialogs.alert(
-                t("rds", "Your files and metadata were synchronized."),
-                t("rds", "RDS Update project")
-              );
-            })
+            self._view._files.load(self._studies.getActive().researchIndex).done(function () {
+              $.when.apply([self._view._files.triggerSync(), self._view._files.triggerMetadataSync()]).done(function () {
+                OC.dialogs.alert(
+                  t("rds", "Your files and metadata were synchronized."),
+                  t("rds", "RDS Update project")
+                );
+              })
+            });
           }
         }
       );
