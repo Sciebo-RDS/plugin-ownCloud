@@ -14,7 +14,7 @@
   OC.rds.Files.prototype = {
     load: function (researchIndex) {
       var self = this;
-      $.when(
+      return $.when(
         this.loadSettings(researchIndex),
         this.loadFiles(researchIndex)
       ).then(function () {
