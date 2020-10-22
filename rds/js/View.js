@@ -227,243 +227,245 @@
     });
 
     $("#app-content-wrapper #btn-save-research-and-continue").click(function () {
-      OC.dialogs.confirm(
-        t("rds", "Are you sure, that you want to synchronize this research to services?"),
-        t("rds", "RDS Update project"),
-        function (confirmation) {
-          {
-            if (confirmation == false) {
-              return;
-            }
+      self.save().done(function () {
+        OC.dialogs.confirm(
+          t("rds", "Are you sure, that you want to synchronize this research to services?"),
+          t("rds", "RDS Update project"),
+          function (confirmation) {
+            {
+              if (confirmation == false) {
+                return;
+              }
 
-            self._view._files.load(self._studies.getActive().researchIndex).done(function () {
-              $.when.apply([self._view._files.triggerSync(), self._view._files.triggerMetadataSync()]).done(function () {
-                OC.dialogs.alert(
-                  t("rds", "Your files and metadata will be synchronized within the next few minutes."),
-                  t("rds", "RDS Update project")
-                );
-              })
-            });
-          }
+              self._view._files.load(self._studies.getActive().researchIndex).done(function () {
+                $.when.apply([self._view._files.triggerSync(), self._view._files.triggerMetadataSync()]).done(function () {
+                  OC.dialogs.alert(
+                    t("rds", "Your files and metadata will be synchronized within the next few minutes."),
+                    t("rds", "RDS Update project")
+                  );
+                })
+              });
+            })
+      }
         }
-      );
-    });
+    );
+  });
+};
+
+OC.rds.WorkflowTemplate.prototype._saveFn = function () {
+  var self = this;
+  var portIn = [];
+  var portOut = [];
+
+  var owncloudPort = {
+    port: "port-" + "Owncloud".toLowerCase(),
+    properties: [
+      {
+        portType: "fileStorage",
+        value: true
+      },
+      {
+        portType: "customProperties",
+        value: [{
+          key: "filepath",
+          value: $("#fileStorage-path-Owncloud").html().trim(),
+        }],
+      }
+    ]
   };
 
-  OC.rds.WorkflowTemplate.prototype._saveFn = function () {
-    var self = this;
-    var portIn = [];
-    var portOut = [];
+  portIn.push(owncloudPort);
 
-    var owncloudPort = {
-      port: "port-" + "Owncloud".toLowerCase(),
+  var deferreds = []
+
+  $(".metadata-service input").each(function (index, obj) {
+    var $this = $(obj)
+    var servicename = $this.data("service")
+    var prechecked = $this.data("projectid")
+
+    if ($this.is(":checked")) {
+      if (prechecked === undefined) {
+        deferreds.push(self._services.createProject(servicename))
+      } else {
+        var servicePort = {
+          port: "port-" + servicename.toLowerCase(),
+          properties: [
+            {
+              portType: "metadata",
+              value: true
+            },
+            {
+              portType: "customProperties",
+              value: [{
+                key: "projectId",
+                value: prechecked.toString()
+              }],
+            }
+          ]
+        };
+        portOut.push(servicePort);
+      }
+    }
+  })
+
+  return $.when.apply($, deferreds).done(function (project) {
+    if (project === undefined) {
+      return
+    }
+
+    var servicePort = {
+      port: project.portName,
       properties: [
         {
-          portType: "fileStorage",
+          portType: "metadata",
           value: true
         },
         {
           portType: "customProperties",
           value: [{
-            key: "filepath",
-            value: $("#fileStorage-path-Owncloud").html().trim(),
+            key: "projectId",
+            value: project.projectId.toString()
           }],
         }
       ]
     };
+    portOut.push(servicePort);
+  }).done(function () {
+    return self._studies.updateActive(portIn, portOut)
+  })
+};
 
-    portIn.push(owncloudPort);
+OC.rds.View = function (studies, services, files) {
+  this._studies = studies;
+  this._services = services;
+  this._files = files;
+  this._stateView = 0;
 
-    var deferreds = []
+  this._templates = [
+    new OC.rds.OverviewTemplate(
+      "#research-overview-tpl",
+      this,
+      this._services,
+      this._studies
+    ),
+    new OC.rds.WorkflowTemplate(
+      "#research-workflow-tpl",
+      this,
+      this._services,
+      this._studies
+    ),
+  ];
+};
 
-    $(".metadata-service input").each(function (index, obj) {
-      var $this = $(obj)
-      var servicename = $this.data("service")
-      var prechecked = $this.data("projectid")
-
-      if ($this.is(":checked")) {
-        if (prechecked === undefined) {
-          deferreds.push(self._services.createProject(servicename))
-        } else {
-          var servicePort = {
-            port: "port-" + servicename.toLowerCase(),
-            properties: [
-              {
-                portType: "metadata",
-                value: true
-              },
-              {
-                portType: "customProperties",
-                value: [{
-                  key: "projectId",
-                  value: prechecked.toString()
-                }],
-              }
-            ]
-          };
-          portOut.push(servicePort);
+OC.rds.View.prototype = {
+  renderContent: function () {
+    var self = this;
+    if (self._studies.getActive() === undefined) {
+      self._stateView = 0;
+    }
+    this._templates[self._stateView].render();
+  },
+  renderNavigation: function () {
+    var self = this;
+    var source = $("#navigation-tpl").html();
+    var template = Handlebars.compile(source);
+    function patch(studies) {
+      studies.forEach(function (research, index) {
+        if (research.status === 2) {
+          this[index].showSync = true;
         }
-      }
-    })
+      }, studies);
 
-    return $.when.apply($, deferreds).done(function (project) {
-      if (project === undefined) {
-        return
-      }
+      return studies;
+    }
+    var html = template({ studies: patch(this._studies.getAll()) });
 
-      var servicePort = {
-        port: project.portName,
-        properties: [
-          {
-            portType: "metadata",
-            value: true
-          },
-          {
-            portType: "customProperties",
-            value: [{
-              key: "projectId",
-              value: project.projectId.toString()
-            }],
-          }
-        ]
-      };
-      portOut.push(servicePort);
-    }).done(function () {
-      return self._studies.updateActive(portIn, portOut)
-    })
-  };
+    $("#app-navigation ul").html(html);
 
-  OC.rds.View = function (studies, services, files) {
-    this._studies = studies;
-    this._services = services;
-    this._files = files;
-    this._stateView = 0;
+    // create new research
+    var self = this;
+    $("#new-research").click(function () {
+      var conn = {};
 
-    this._templates = [
-      new OC.rds.OverviewTemplate(
-        "#research-overview-tpl",
-        this,
-        this._services,
-        this._studies
-      ),
-      new OC.rds.WorkflowTemplate(
-        "#research-workflow-tpl",
-        this,
-        this._services,
-        this._studies
-      ),
-    ];
-  };
+      self._studies
+        .create()
+        .done(function () {
+          self._stateView = 1;
+          self.render();
+        })
+        .fail(function () {
+          OC.dialogs.alert(
+            t("rds", "Could not create research"),
+            t("rds", "RDS Update project")
+          );
+        });
+    });
 
-  OC.rds.View.prototype = {
-    renderContent: function () {
-      var self = this;
-      if (self._studies.getActive() === undefined) {
-        self._stateView = 0;
-      }
-      this._templates[self._stateView].render();
-    },
-    renderNavigation: function () {
-      var self = this;
-      var source = $("#navigation-tpl").html();
-      var template = Handlebars.compile(source);
-      function patch(studies) {
-        studies.forEach(function (research, index) {
-          if (research.status === 2) {
-            this[index].showSync = true;
-          }
-        }, studies);
-
-        return studies;
-      }
-      var html = template({ studies: patch(this._studies.getAll()) });
-
-      $("#app-navigation ul").html(html);
-
-      // create new research
-      var self = this;
-      $("#new-research").click(function () {
-        var conn = {};
-
-        self._studies
-          .create()
-          .done(function () {
-            self._stateView = 1;
-            self.render();
-          })
-          .fail(function () {
-            OC.dialogs.alert(
-              t("rds", "Could not create research"),
-              t("rds", "RDS Update project")
-            );
-          });
-      });
-
-      // show app menu
-      $("#app-navigation .app-navigation-entry-utils-menu-button").click(
-        function () {
-          var entry = $(this).closest(".research");
-          entry.find(".app-navigation-entry-menu").toggleClass("open");
-        }
-      );
-
-      $("#app-navigation .research .upload").click(function () {
-        self._files
-          .triggerSync()
-          .done(function () {
-            self.render();
-          })
-          .fail(function () {
-            OC.dialogs.alert(
-              t("Could not sync research, not found"),
-              t("rds", "RDS Update project")
-            );
-          });
-      });
-
-      // delete a research
-      $("#app-navigation .research .delete").click(function () {
+    // show app menu
+    $("#app-navigation .app-navigation-entry-utils-menu-button").click(
+      function () {
         var entry = $(this).closest(".research");
-        entry.find(".app-navigation-entry-menu").removeClass("open");
+        entry.find(".app-navigation-entry-menu").toggleClass("open");
+      }
+    );
 
-        self._studies
-          .removeActive()
-          .done(function () {
-            self.render();
-          })
-          .fail(function () {
-            OC.dialogs.alert(
-              t("Could not delete research, not found"),
-              t("rds", "RDS Update project")
-            );
-          });
-      });
+    $("#app-navigation .research .upload").click(function () {
+      self._files
+        .triggerSync()
+        .done(function () {
+          self.render();
+        })
+        .fail(function () {
+          OC.dialogs.alert(
+            t("Could not sync research, not found"),
+            t("rds", "RDS Update project")
+          );
+        });
+    });
 
-      // load a research
-      $("#app-navigation .research > a").click(function () {
-        var id = parseInt($(this).parent().data("id"), 10);
-        self._studies.load(id);
+    // delete a research
+    $("#app-navigation .research .delete").click(function () {
+      var entry = $(this).closest(".research");
+      entry.find(".app-navigation-entry-menu").removeClass("open");
 
-        if (self._studies.getActive().status > 1) {
-          self._files.load(self._studies.getActive().researchIndex);
-        }
+      self._studies
+        .removeActive()
+        .done(function () {
+          self.render();
+        })
+        .fail(function () {
+          OC.dialogs.alert(
+            t("Could not delete research, not found"),
+            t("rds", "RDS Update project")
+          );
+        });
+    });
 
-        self._stateView = 1;
-        self.render();
-      });
-    },
-    render: function () {
-      this.renderNavigation();
-      this.renderContent();
-      $(".icon-info").tipsy({ gravity: "w" });
-    },
-    loadAll: function () {
-      var self = this;
+    // load a research
+    $("#app-navigation .research > a").click(function () {
+      var id = parseInt($(this).parent().data("id"), 10);
+      self._studies.load(id);
 
-      return $.when(
-        self._studies.loadAll(),
-        self._services.loadAll(),
-      );
-    },
-  };
-})(OC, window, jQuery);
+      if (self._studies.getActive().status > 1) {
+        self._files.load(self._studies.getActive().researchIndex);
+      }
+
+      self._stateView = 1;
+      self.render();
+    });
+  },
+  render: function () {
+    this.renderNavigation();
+    this.renderContent();
+    $(".icon-info").tipsy({ gravity: "w" });
+  },
+  loadAll: function () {
+    var self = this;
+
+    return $.when(
+      self._studies.loadAll(),
+      self._services.loadAll(),
+    );
+  },
+};
+}) (OC, window, jQuery);
