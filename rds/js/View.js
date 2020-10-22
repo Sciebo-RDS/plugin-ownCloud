@@ -282,10 +282,15 @@
       var $this = $(obj)
       var servicename = $this.data("service")
       var prechecked = $this.data("projectid")
+      var results = []
 
       if ($this.is(":checked")) {
         if (prechecked === undefined) {
-          deferreds.push(self._services.createProject(servicename))
+          var def = self._services.createProject(servicename)
+          def.done(function (res) {
+            results.push(res)
+          })
+          deferreds.push(def)
         } else {
           var servicePort = {
             port: "port-" + servicename.toLowerCase(),
@@ -308,28 +313,26 @@
       }
     })
 
-    return $.when.apply($, deferreds).done(function (project) {
-      if (project === undefined) {
-        return
-      }
-
-      var servicePort = {
-        port: project.portName,
-        properties: [
-          {
-            portType: "metadata",
-            value: true
-          },
-          {
-            portType: "customProperties",
-            value: [{
-              key: "projectId",
-              value: project.projectId.toString()
-            }],
-          }
-        ]
-      };
-      portOut.push(servicePort);
+    return $.when.apply($, deferreds).done(function () {
+      results.forEach(function (project) {
+        var servicePort = {
+          port: project.portName,
+          properties: [
+            {
+              portType: "metadata",
+              value: true
+            },
+            {
+              portType: "customProperties",
+              value: [{
+                key: "projectId",
+                value: project.projectId.toString()
+              }],
+            }
+          ]
+        };
+        portOut.push(servicePort);
+      })
     }).done(function () {
       return self._studies.updateActive(portIn, portOut)
     })
