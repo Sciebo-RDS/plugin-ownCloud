@@ -277,12 +277,12 @@
     portIn.push(owncloudPort);
 
     var deferreds = []
+    var results = []
 
     $(".metadata-service input").each(function (index, obj) {
       var $this = $(obj)
       var servicename = $this.data("service")
       var prechecked = $this.data("projectid")
-      var results = []
 
       if ($this.is(":checked")) {
         if (prechecked === undefined) {
