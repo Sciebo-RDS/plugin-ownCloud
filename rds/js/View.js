@@ -227,28 +227,28 @@
     });
 
     $("#app-content-wrapper #btn-save-research-and-continue").click(function () {
-      self.save().done(function () {
-        OC.dialogs.confirm(
-          t("rds", "Are you sure, that you want to synchronize this research to services?"),
-          t("rds", "RDS Update project"),
-          function (confirmation) {
-            {
-              if (confirmation == false) {
-                return;
-              }
+      OC.dialogs.confirm(
+        t("rds", "Are you sure, that you want to synchronize this research to services?"),
+        t("rds", "RDS Update project"),
+        function (confirmation) {
+          {
+            if (confirmation == false) {
+              return;
+            }
 
+            self.save().done(function () {
               self._view._files.load(self._studies.getActive().researchIndex).done(function () {
                 $.when.apply([self._view._files.triggerSync(), self._view._files.triggerMetadataSync()]).done(function () {
                   OC.dialogs.alert(
-                    t("rds", "Your files and metadata will be synchronized within the next few."),
+                    t("rds", "Your files and metadata will be synchronized within the next few minutes."),
                     t("rds", "RDS Update project")
                   );
                 })
               });
-            }
+            })
           }
-        );
-      })
+        }
+      );
     });
   };
 
