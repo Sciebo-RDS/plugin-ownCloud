@@ -228,7 +228,7 @@
 
     $("#app-content-wrapper #btn-save-research-and-continue").click(function () {
       OC.dialogs.confirm(
-        t("rds", "Are you sure, that you want to synchronize this research to services?"),
+        t("rds", "Are you sure, that you want to synchronize this research to services? This will publish your files on different services."),
         t("rds", "RDS Update project"),
         function (confirmation) {
           {
@@ -238,11 +238,17 @@
 
             self.save().done(function () {
               self._view._files.load(self._studies.getActive().researchIndex).done(function () {
-                $.when.apply([self._view._files.triggerSync(), self._view._files.triggerMetadataSync()]).done(function () {
+                $.when(self._view._files.triggerSync(), self._view._files.triggerMetadataSync()).done(function () {
                   OC.dialogs.alert(
-                    t("rds", "Your files and metadata will be synchronized within the next few minutes."),
+                    t("rds", "Your files and metadata will be synchronized and published within the next few minutes."),
                     t("rds", "RDS Update project")
                   );
+                  self._studies.publishActive().done(function () {
+                    OC.dialogs.alert(
+                      t("rds", "Your files and metadata were synchronized and published."),
+                      t("rds", "RDS Update project")
+                    );
+                  })
                 })
               });
             })
