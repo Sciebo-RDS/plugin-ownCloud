@@ -237,6 +237,7 @@
             }
 
             self.save().done(function () {
+              self._view.render();
               self._view._files.load(self._studies.getActive().researchIndex).done(function () {
                 OC.dialogs.alert(
                   t("rds", "Your files and metadata will be synchronized and published within the next few minutes."),
