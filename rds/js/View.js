@@ -238,11 +238,11 @@
 
             self.save().done(function () {
               self._view._files.load(self._studies.getActive().researchIndex).done(function () {
+                OC.dialogs.alert(
+                  t("rds", "Your files and metadata will be synchronized and published within the next few minutes."),
+                  t("rds", "RDS Update project")
+                );
                 $.when(self._view._files.triggerSync(), self._view._files.triggerMetadataSync()).done(function () {
-                  OC.dialogs.alert(
-                    t("rds", "Your files and metadata will be synchronized and published within the next few minutes."),
-                    t("rds", "RDS Update project")
-                  );
                   self._studies.publishActive().done(function () {
                     OC.dialogs.alert(
                       t("rds", "Your files and metadata were synchronized and published."),
