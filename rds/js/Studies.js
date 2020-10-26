@@ -31,7 +31,12 @@
     loadMetadata: function () {
       return this._metadata.load(this._activeResearch.researchIndex);
     },
-
+    triggerSync: function () {
+      return $.ajax({
+        url: this._baseUrl + "/" + researchIndex + "/synchronize",
+        method: "POST",
+      })
+    },
     publishActive: function () {
       var index = undefined;
       var deferred = $.Deferred();
