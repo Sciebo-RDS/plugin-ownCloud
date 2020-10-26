@@ -33,7 +33,7 @@
     },
     triggerSync: function () {
       return $.ajax({
-        url: this._baseUrl + "/" + researchIndex + "/synchronize",
+        url: this._baseUrl + "/" + this._activeResearch.researchIndex + "/synchronize",
         method: "POST",
       })
     },
