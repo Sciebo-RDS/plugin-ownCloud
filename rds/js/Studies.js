@@ -31,8 +31,13 @@
     loadMetadata: function () {
       return this._metadata.load(this._activeResearch.researchIndex);
     },
-
-    publishActive: function(){
+    triggerSync: function () {
+      return $.ajax({
+        url: this._baseUrl + "/" + this._activeResearch.researchIndex + "/synchronize",
+        method: "POST",
+      })
+    },
+    publishActive: function () {
       var index = undefined;
       var deferred = $.Deferred();
       var researchIndex = this._activeResearch.researchIndex;
@@ -163,6 +168,8 @@
       conn.portIn = portIn;
       conn.portOut = portOut;
       conn.status = 2;
+
+      console.log(conn)
 
       this._activeResearch = conn;
 

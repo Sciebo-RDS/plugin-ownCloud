@@ -14,7 +14,7 @@
   OC.rds.Files.prototype = {
     load: function (researchIndex) {
       var self = this;
-      $.when(
+      return $.when(
         this.loadSettings(researchIndex),
         this.loadFiles(researchIndex)
       ).then(function () {
@@ -33,6 +33,29 @@
         type: "POST",
         url: OC.generateUrl(
           "/apps/rds/research/" + this._currentResearch + "/files"
+        ),
+        dataType: "json",
+      })
+        .done(function () {
+          deferred.resolve();
+        })
+        .fail(function () {
+          deferred.reject();
+        });
+      return deferred.promise();
+    },
+    triggerMetadataSync: function() {
+      var deferred = $.Deferred();
+
+      if (this._currentResearch === undefined) {
+        deferred.reject();
+        return deferred.promise();
+      }
+
+      $.ajax({
+        type: "POST",
+        url: OC.generateUrl(
+          "/apps/rds/research/" + this._currentResearch + "/metadata"
         ),
         dataType: "json",
       })

@@ -27,9 +27,11 @@ return [
         ['name' => 'research#deleteUser',                     'url' => '/research',                        'verb' => 'DELETE'],
         ['name' => 'research#filesGet',                       'url' => '/research/{id}/files',             'verb' => 'GET'],
         ['name' => 'research#filesTrigger',                   'url' => '/research/{id}/files',             'verb' => 'POST'],
+        ['name' => 'metadata#triggerMetadata',                'url' => '/research/{id}/metadata',          'verb' => 'POST'],
         ['name' => 'research#filesSettingsGet',               'url' => '/research/{id}/settings',          'verb' => 'GET'],
         ['name' => 'research#filesSettingsUpdate',            'url' => '/research/{id}/settings',          'verb' => 'PUT'],
         ['name' => 'research#publish',                        'url' => '/research/{id}/publish',           'verb' => 'POST'],
+        ['name' => 'aio#triggerSync',                         'url' => '/research/{id}/synchronize',       'verb' => 'POST'],
 
         # User Service resource API Endpoints, index/show/create/delete
         ['name' => 'projects#index',            'url' => '/userservice/{servicename}/projects',             'verb' => 'GET'],
