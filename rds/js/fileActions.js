@@ -117,9 +117,9 @@
             filename: fileName,
           };
 
-          console.log(dir, folderDict)
+          console.log(filename, folderDict)
 
-          window.location = OC.generateUrl("apps/rds/?researchIndex=" + folderDict[dir])
+          window.location = OC.generateUrl("apps/rds/?researchIndex=" + folderDict[filename])
 
         },
       });
