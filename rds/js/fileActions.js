@@ -119,7 +119,7 @@
 
           console.log(dir, folderDict)
 
-          window.location = OC.generateUrl("apps/rds/#researchIndex=" + folderDict[dir])
+          window.location = OC.generateUrl("apps/rds/?researchIndex=" + folderDict[dir])
 
         },
       });

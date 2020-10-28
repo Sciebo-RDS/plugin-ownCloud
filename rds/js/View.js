@@ -3,6 +3,17 @@
 
   OC.rds = OC.rds || {};
 
+  function getUrlVars() {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < hashes.length; i++) {
+      hash = hashes[i].split('=');
+      vars.push(hash[0]);
+      vars[hash[0]] = hash[1];
+    }
+    return vars;
+  }
+
   OC.rds.AbstractTemplate = function (divName, view) {
     this._divName = divName;
     this._view = view;
@@ -473,7 +484,13 @@
       return $.when(
         self._studies.loadAll(),
         self._services.loadAll(),
-      );
+      ).done(function () {
+        var queryString = getUrlVars()
+        var index = queryString["researchIndex"]
+        if (index !== undefined) {
+          self._studies.load(index)
+        }
+      });
     },
   };
 })(OC, window, jQuery);
