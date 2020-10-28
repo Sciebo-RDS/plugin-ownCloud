@@ -4,6 +4,8 @@
 
   OC.rds = OC.rds || {};
 
+  var folderDict = {};
+
   OC.rds.FilePlugin = {
 
     /**
@@ -39,15 +41,20 @@
         var dir = context.fileList.getCurrentDirectory();
 
         var found = false;
-        directories.getFolders().forEach(function (item) {
+        var researchIndex = undefined;
+        for (var key in directories.getFolders()) {
+          var item = array[key];
+
           // check if following is in folders:
           // - current directory (because then the files can be pushed separately)
           // - one of the files (can be pushed manually)
           // - edge case: filenames in root dir
           if (item === dir + "/" || item === dir + "/" + fileName + "/" || dir === "/" && item == "/" + fileName + "/") {
             found = true;
+            researchIndex = index;
+            folderDict[item] = researchIndex
           }
-        });
+        };
 
         if (found) {
           if (mimetype === "httpd/unix-directory") {
@@ -62,6 +69,7 @@
 
     }
   };
+
 
   var addFolderToResearch = {
     init: function (mimetype, fileActions) {
@@ -109,27 +117,10 @@
             filename: fileName,
           };
 
-          $.ajax({
-            type: "POST",
-            url: OC.generateUrl("/apps/rds/research/files"),
-            data: JSON.stringify(data),
-            contentType: "application/json",
-          })
-            .done(function () {
-              OC.dialogs.alert(
-                t(
-                  "rds",
-                  "File was successfully uploaded to outgoing services."
-                ),
-                t("rds", "RDS upload directly through Files app")
-              );
-            })
-            .fail(function () {
-              OC.dialogs.alert(
-                t("rds", "File upload to outgoing services failed."),
-                t("rds", "RDS upload directly through Files app")
-              );
-            });
+          console.log(dir, folderDict)
+
+          window.location = OC.generateUrl("apps/rds/#researchIndex=" + folderDict[dir])
+
         },
       });
     },
