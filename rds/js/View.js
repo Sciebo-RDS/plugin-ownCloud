@@ -3,16 +3,6 @@
 
   OC.rds = OC.rds || {};
 
-  function getUrlVars() {
-    var vars = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for (var i = 0; i < hashes.length; i++) {
-      hash = hashes[i].split('=');
-      vars.push(hash[0]);
-      vars[hash[0]] = hash[1];
-    }
-    return vars;
-  }
 
   OC.rds.AbstractTemplate = function (divName, view) {
     this._divName = divName;
@@ -485,8 +475,8 @@
         self._studies.loadAll(),
         self._services.loadAll(),
       ).done(function () {
-        var queryString = getUrlVars()
-        var index = queryString["researchIndex"]
+        var params = new window.URLSearchParams(window.location.search);
+        var index = params.get("researchIndex")
         if (index !== undefined) {
           self._studies.load(index)
           self._stateView = 1;
