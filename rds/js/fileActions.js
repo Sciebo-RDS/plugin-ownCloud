@@ -51,7 +51,7 @@
           // - edge case: filenames in root dir
           if (item === dir + "/" || item === dir + "/" + fileName + "/" || dir === "/" && item == "/" + fileName + "/") {
             found = true;
-            researchIndex = index;
+            researchIndex = key;
             folderDict[item] = researchIndex
           }
         };
