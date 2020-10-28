@@ -44,7 +44,7 @@
           .always(function () {
             view.render();
             if (fileName !== undefined) {
-              $("#fileStorage-path-Owncloud").html(fileName);
+              $("#filepath").html(t("rds", "Current path:") + ' ' + '<span id="fileStorage-path-Owncloud">' + fileName.trim() + '</span>')
             }
           });
       } else {
