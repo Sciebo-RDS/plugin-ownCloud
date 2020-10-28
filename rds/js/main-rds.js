@@ -16,7 +16,7 @@
     if (params.has("createResearch")) {
       create = true;
 
-      fileName = params.get(folder)
+      fileName = params.get("folder")
 
       var newURL = location.href.split("?")[0];
       window.history.pushState('object', document.title, newURL);
