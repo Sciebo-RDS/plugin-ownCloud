@@ -4,6 +4,8 @@
 
   OC.rds = OC.rds || {};
 
+  var folderDict = {};
+
   OC.rds.FilePlugin = {
 
     /**
@@ -39,15 +41,20 @@
         var dir = context.fileList.getCurrentDirectory();
 
         var found = false;
-        directories.getFolders().forEach(function (item) {
+        var researchIndex = undefined;
+        for (var key in directories.getFolders()) {
+          var item = directories.getFolders()[key];
+
           // check if following is in folders:
           // - current directory (because then the files can be pushed separately)
           // - one of the files (can be pushed manually)
           // - edge case: filenames in root dir
           if (item === dir + "/" || item === dir + "/" + fileName + "/" || dir === "/" && item == "/" + fileName + "/") {
             found = true;
+            researchIndex = key;
+            folderDict[item] = researchIndex
           }
-        });
+        };
 
         if (found) {
           if (mimetype === "httpd/unix-directory") {
@@ -63,6 +70,7 @@
     }
   };
 
+
   var addFolderToResearch = {
     init: function (mimetype, fileActions) {
       var self = this;
@@ -74,8 +82,20 @@
         type: OCA.Files.FileActions.TYPE_DROPDOWN,
         iconClass: "icon-rds-research-small",
         actionHandler: function (filename, context) {
-          //TODO: implement here the stuff
-          console.log("add here the folder to a research project");
+          var fileName = "";
+          var mimetype = context.$file.data("mime");
+          var dir = context.fileList.getCurrentDirectory();
+
+          if (!dir.endsWith("/")) {
+            dir += "/";
+          }
+
+          fileName = dir + filename;
+          if (mimetype === "httpd/unix-directory") {
+            fileName += "/"
+          }
+
+          window.location = OC.generateUrl("apps/rds/?createResearch&folder=" + fileName)
         },
       });
     },
@@ -109,27 +129,10 @@
             filename: fileName,
           };
 
-          $.ajax({
-            type: "POST",
-            url: OC.generateUrl("/apps/rds/research/files"),
-            data: JSON.stringify(data),
-            contentType: "application/json",
-          })
-            .done(function () {
-              OC.dialogs.alert(
-                t(
-                  "rds",
-                  "File was successfully uploaded to outgoing services."
-                ),
-                t("rds", "RDS upload directly through Files app")
-              );
-            })
-            .fail(function () {
-              OC.dialogs.alert(
-                t("rds", "File upload to outgoing services failed."),
-                t("rds", "RDS upload directly through Files app")
-              );
-            });
+          console.log(fileName, folderDict, folderDict[fileName])
+
+          window.location = OC.generateUrl("apps/rds/?researchIndex=" + folderDict[fileName])
+
         },
       });
     },

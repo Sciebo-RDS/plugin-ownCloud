@@ -14,7 +14,7 @@
     load: function (researchIndex) {
       var self = this;
       this._studies.forEach(function (conn) {
-        if (conn.researchIndex === researchIndex) {
+        if (conn.researchIndex == researchIndex) {
           conn.active = true;
           self._activeResearch = conn;
         } else {

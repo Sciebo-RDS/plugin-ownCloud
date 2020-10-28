@@ -3,6 +3,7 @@
 
   OC.rds = OC.rds || {};
 
+
   OC.rds.AbstractTemplate = function (divName, view) {
     this._divName = divName;
     this._view = view;
@@ -473,7 +474,14 @@
       return $.when(
         self._studies.loadAll(),
         self._services.loadAll(),
-      );
+      ).done(function () {
+        var params = new window.URLSearchParams(window.location.search);
+        var index = params.get("researchIndex")
+        if (index !== undefined) {
+          self._studies.load(index)
+          self._stateView = 1;
+        }
+      });
     },
   };
 })(OC, window, jQuery);

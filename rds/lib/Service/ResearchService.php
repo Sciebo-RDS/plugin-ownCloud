@@ -108,7 +108,7 @@ class ResearchService
                 if ($id != null && $id == $folder['researchIndex']) {
                     return $folder;
                 }
-                $ret[] = $folder['path'];
+                $ret[$folder['researchIndex']] = $folder['path'];
             }
 
             return $ret;
