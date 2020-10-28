@@ -489,6 +489,7 @@
         var index = queryString["researchIndex"]
         if (index !== undefined) {
           self._studies.load(index)
+          self._stateView = 1;
         }
       });
     },

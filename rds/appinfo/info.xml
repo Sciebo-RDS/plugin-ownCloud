@@ -6,7 +6,7 @@
     <summary>Integrates the RDS infrastructure into the ownCloud.</summary>
     <licence>AGPL</licence>
     <author>Peter Heiss</author>
-    <version>x.x</version>
+    <version>0.5</version>
     <namespace>RDS</namespace>
     <category>integration</category>
     <dependencies>
