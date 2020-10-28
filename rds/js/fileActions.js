@@ -82,8 +82,20 @@
         type: OCA.Files.FileActions.TYPE_DROPDOWN,
         iconClass: "icon-rds-research-small",
         actionHandler: function (filename, context) {
-          //TODO: implement here the stuff
-          console.log("add here the folder to a research project");
+          var fileName = "";
+          var mimetype = context.$file.data("mime");
+          var dir = context.fileList.getCurrentDirectory();
+
+          if (!dir.endsWith("/")) {
+            dir += "/";
+          }
+
+          fileName = dir + filename;
+          if (mimetype === "httpd/unix-directory") {
+            fileName += "/"
+          }
+
+          window.location = OC.generateUrl("apps/rds/?createResearch&folder=" + fileName)
         },
       });
     },

@@ -12,9 +12,12 @@
 
     var params = new window.URLSearchParams(window.location.search);
     var create = false;
+    var fileName = undefined;
     if (params.has("createResearch")) {
       create = true;
-      
+
+      fileName = params.get(folder)
+
       var newURL = location.href.split("?")[0];
       window.history.pushState('object', document.title, newURL);
     }
@@ -40,6 +43,9 @@
           })
           .always(function () {
             view.render();
+            if (fileName !== undefined) {
+              $("#fileStorage-path-Owncloud").html(fileName);
+            }
           });
       } else {
         view.render();
