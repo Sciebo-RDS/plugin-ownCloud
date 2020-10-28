@@ -43,7 +43,7 @@
         var found = false;
         var researchIndex = undefined;
         for (var key in directories.getFolders()) {
-          var item = array[key];
+          var item = directories.getFolders()[key];
 
           // check if following is in folders:
           // - current directory (because then the files can be pushed separately)
