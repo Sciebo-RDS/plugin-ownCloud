@@ -236,14 +236,16 @@
       $('#rds_dialog').parent().css('moz-box-shadow', '0px 0px 0px #5151514D');
       $('#rds_dialog').parent().css('-webkit-box-shadow', '0px 0px 0px #5151514D');
 
-      $('#rds_dialog a').css('text-decoration', 'underline');
 
       $('#rds_dialog').html(
         t("rds", "This application is currently under heavy development.") + "<br /><br />" +
         t("rds", "Please use <a href=\"https://uts-eresearch.github.io/describo/\" target=\"_blank\">Describo</a> to describe your metadata on your local ownCloud-synchronized folder. ") + "<br />" +
         t("rds", "Use the following <a href=\"https://www.research-data-services.org/metadata/sciebords-profile.json\" target=\"_blank\">schema file</a> as your profile schema.")
       );
+
+      $('#rds_dialog a').css('text-decoration', 'underline');
     })
+
 
 
     $("#app-content-wrapper #btn-save-research").click(function () {
