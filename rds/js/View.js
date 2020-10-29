@@ -236,6 +236,8 @@
       $('#rds_dialog').parent().css('moz-box-shadow', '0px 0px 0px #5151514D');
       $('#rds_dialog').parent().css('-webkit-box-shadow', '0px 0px 0px #5151514D');
 
+      $('#rds_dialog a').css('text-decoration:', 'none');
+
       $('#rds_dialog').html(
         t("rds", "This application is currently under heavy development.") + "<br /><br />" +
         t("rds", "Please use <a href=\"https://uts-eresearch.github.io/describo/\" target=\"_blank\">Describo</a> to describe your metadata on your local ownCloud-synchronized folder. ") + "<br />" +
