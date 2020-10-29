@@ -215,6 +215,7 @@
       renderSelect: function () {
         var self = this;
         var notUsedServices = self._services._services_without_user();
+        var selected = false;
 
         self._select.addEventListener("change", function () {
           var select = self._select;
@@ -232,6 +233,12 @@
             item.authorizeUrl + "&state=" + item.state + "FROMSETTINGS";
           var option = document.createElement("option");
           option.text = option.value = item.servicename;
+          
+          if (!selected) {
+            option.attr('selected', 'selected');
+            selected = true;
+          }
+
           self._select.add(option, 0);
           self._select.selectedIndex = 0;
         });
