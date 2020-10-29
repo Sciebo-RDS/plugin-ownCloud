@@ -237,13 +237,14 @@
           if (!selected) {
             $(option).attr('selected', 'selected');
             selected = true;
+            self._btn.disabled = false;
           }
 
           self._select.add(option, 0);
-          self._select.selectedIndex = 0;
+          self._select.selectedIndex = 1;
         });
 
-        self._select.value = 0;
+        self._select.value = 1;
       },
       renderButton: function () {
         var self = this;
