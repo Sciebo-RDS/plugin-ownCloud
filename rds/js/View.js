@@ -249,6 +249,10 @@
 
     $("#app-content-wrapper #btn-save-research").click(function () {
       self.save().done(function () {
+        OC.dialogs.alert(
+          t("rds", "Successfully saved your changes."),
+          t("rds", "RDS Update project")
+        );
         self._view.render();
       })
     });
