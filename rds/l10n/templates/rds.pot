@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud Core 8.0.0\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2020-10-02 14:38+0200\n"
+"POT-Creation-Date: 2020-10-29 12:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,53 +21,76 @@ msgstr ""
 msgid "RDS App"
 msgstr ""
 
-#: js/View.js:56
+#: js/View.js:57
 msgid "Your entries could not be saved."
 msgstr ""
 
-#: js/View.js:57 js/View.js:482 js/View.js:491 js/View.js:507 js/View.js:594
-#: js/View.js:616 js/View.js:634 js/main-rds.js:38
+#: js/View.js:58 js/View.js:254 js/View.js:263 js/View.js:275 js/View.js:280
+#: js/View.js:438 js/View.js:460 js/View.js:478 js/main-rds.js:41
 msgid "RDS Update project"
 msgstr ""
 
-#: js/View.js:223
-msgid "Choose source and / or target folder"
+#: js/View.js:208
+msgid "Choose source folder"
 msgstr ""
 
-#: js/View.js:481
-msgid "Your files will be synchronize within 2 minutes."
+#: js/View.js:215 js/main-rds.js:47
+#: templates/part.research.content.workflow.php:15
+msgid "Current path:"
 msgstr ""
 
-#: js/View.js:488
-msgid "Are you sure, that you want to close the research {researchIndex}?"
+#: js/View.js:229
+msgid "RDS Metadata"
 msgstr ""
 
-#: js/View.js:506
-msgid "Could not close this research."
+#: js/View.js:240
+msgid "This application is currently under heavy development."
 msgstr ""
 
-#: js/View.js:593 js/main-rds.js:37
+#: js/View.js:241
+msgid ""
+"Please use <a href=\"https://uts-eresearch.github.io/describo/\" target="
+"\"_blank\">Describo</a> to describe your metadata on your local ownCloud-"
+"synchronized folder. "
+msgstr ""
+
+#: js/View.js:242
+msgid ""
+"Use the following <a href=\"https://www.research-data-services.org/metadata/"
+"sciebords-profile.json\" target=\"_blank\">schema file</a> as your profile "
+"schema."
+msgstr ""
+
+#: js/View.js:253
+msgid "Successfully saved your changes."
+msgstr ""
+
+#: js/View.js:262
+msgid ""
+"Are you sure, that you want to synchronize and publish this research to "
+"services?"
+msgstr ""
+
+#: js/View.js:274
+msgid ""
+"Your files and metadata will be synchronized and published within the next "
+"few minutes."
+msgstr ""
+
+#: js/View.js:279
+msgid "Your files and metadata were synchronized and published."
+msgstr ""
+
+#: js/View.js:437 js/main-rds.js:40
 msgid "Could not create research"
 msgstr ""
 
-#: js/fileActions.js:71
+#: js/fileActions.js:79
 msgid "Add folder to RDS"
 msgstr ""
 
-#: js/fileActions.js:89
+#: js/fileActions.js:109
 msgid "Update RDS file"
-msgstr ""
-
-#: js/fileActions.js:122
-msgid "File was successfully uploaded to outgoing services."
-msgstr ""
-
-#: js/fileActions.js:124 js/fileActions.js:130
-msgid "RDS upload directly through Files app"
-msgstr ""
-
-#: js/fileActions.js:129
-msgid "File upload to outgoing services failed."
 msgstr ""
 
 #: js/settings-personal.js:139
@@ -82,7 +105,7 @@ msgstr ""
 msgid "Could not remove the service {servicename}"
 msgstr ""
 
-#: js/settings-personal.js:223
+#: js/settings-personal.js:224
 msgid "Authorize {servicename} now"
 msgstr ""
 
@@ -125,58 +148,6 @@ msgstr ""
 msgid "Create a research in RDS."
 msgstr ""
 
-#: templates/part.research.content.file.php:2
-msgid ""
-"Here you can finalize your research project or synchronize all files with "
-"your defined services."
-msgstr ""
-
-#: templates/part.research.content.file.php:7
-msgid "Files auto upload"
-msgstr ""
-
-#: templates/part.research.content.file.php:9
-msgid "The system will upload all files in the given folder after some time."
-msgstr ""
-
-#: templates/part.research.content.file.php:15
-msgid "Apply file changes"
-msgstr ""
-
-#: templates/part.research.content.file.php:17
-msgid ""
-"Otherwise deletions or file changes are not synchronized to the given "
-"services."
-msgstr ""
-
-#: templates/part.research.content.file.php:23
-#: templates/part.research.content.metadata.php:16
-#: templates/part.research.content.service.php:123
-#: templates/settings-admin.php:27
-msgid "Save"
-msgstr ""
-
-#: templates/part.research.content.file.php:24
-msgid "Synchronize files"
-msgstr ""
-
-#: templates/part.research.content.file.php:25
-msgid "Finish research"
-msgstr ""
-
-#: templates/part.research.content.metadata.php:9
-msgid "Here you enter your metadata informations about your research."
-msgstr ""
-
-#: templates/part.research.content.metadata.php:17
-#: templates/part.research.content.service.php:124
-msgid "Save & continue"
-msgstr ""
-
-#: templates/part.research.content.metadata.php:18
-msgid "Skip"
-msgstr ""
-
 #: templates/part.research.content.overview.php:1
 msgid "This is a nice text in overview"
 msgstr ""
@@ -185,82 +156,44 @@ msgstr ""
 msgid "Welcome info"
 msgstr ""
 
-#: templates/part.research.content.service.php:1
+#: templates/part.research.content.workflow.php:1
 #: templates/part.research.navigation.php:5
 msgid "Project"
 msgstr ""
 
-#: templates/part.research.content.service.php:3
+#: templates/part.research.content.workflow.php:4
 msgid ""
 "Here you can enter all informations about your research synchronization."
 msgstr ""
 
-#: templates/part.research.content.service.php:13
+#: templates/part.research.content.workflow.php:9
 msgid "Please select a folder where you want to take your files from."
 msgstr ""
 
-#: templates/part.research.content.service.php:16
+#: templates/part.research.content.workflow.php:12
 msgid "Select folder"
 msgstr ""
 
-#: templates/part.research.content.service.php:18
-msgid "Current path:"
-msgstr ""
-
-#: templates/part.research.content.service.php:23
+#: templates/part.research.content.workflow.php:18
 msgid "No path currently selected."
 msgstr ""
 
-#: templates/part.research.content.service.php:30
-msgid "Please select a project where you want to take your files to."
+#: templates/part.research.content.workflow.php:24
+msgid ""
+"Please select all services, which you want to use for your synchronization."
 msgstr ""
 
-#: templates/part.research.content.service.php:45
-msgid "Project DOI"
+#: templates/part.research.content.workflow.php:39
+#: templates/settings-admin.php:27
+msgid "Save"
 msgstr ""
 
-#: templates/part.research.content.service.php:45
-msgid "No title found."
+#: templates/part.research.content.workflow.php:40
+msgid "Edit metadata"
 msgstr ""
 
-#: templates/part.research.content.service.php:49
-msgid "No projects found."
-msgstr ""
-
-#: templates/part.research.content.service.php:59
-msgid "Create new project."
-msgstr ""
-
-#: templates/part.research.content.service.php:65
-msgid "For which transfer, do you want to use this service?"
-msgstr ""
-
-#: templates/part.research.content.service.php:66
-msgid "Informations about ingoing and outgoing traffic."
-msgstr ""
-
-#: templates/part.research.content.service.php:75
-msgid "Ingoing"
-msgstr ""
-
-#: templates/part.research.content.service.php:85
-msgid "Outgoing"
-msgstr ""
-
-#: templates/part.research.content.service.php:89
-msgid "For which storage, do you want to use this service?"
-msgstr ""
-
-#: templates/part.research.content.service.php:90
-msgid "Informations about storage for metadata and fileStorage."
-msgstr ""
-
-#: templates/part.research.content.service.php:100
-msgid "File Storage"
-msgstr ""
-
-#: templates/part.research.content.service.php:112
-msgid "Metadata Storage"
+#: templates/part.research.content.workflow.php:41
+msgid "Save & synchronize & publish"
 msgstr ""
 
 #: templates/part.research.navigation.php:2
