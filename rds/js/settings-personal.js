@@ -233,9 +233,9 @@
             item.authorizeUrl + "&state=" + item.state + "FROMSETTINGS";
           var option = document.createElement("option");
           option.text = option.value = item.servicename;
-          
+
           if (!selected) {
-            option.attr('selected', 'selected');
+            $(option).attr('selected', 'selected');
             selected = true;
           }
 
