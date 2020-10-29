@@ -37,5 +37,6 @@
 <div class="wrapper-custom-buttons">
   <div class="spacer"></div>
   <button id="btn-save-research"><?php p($l->t('Save')); ?></button>
+  <button id="btn-edit-metadata"><?php p($l->t('Edit metadata')); ?></button>
   <button id="btn-save-research-and-continue"><?php p($l->t('Save & synchronize & publish')); ?></button>
 </div>

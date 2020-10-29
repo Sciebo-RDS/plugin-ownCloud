@@ -220,6 +220,15 @@
       );
     });
 
+    $("#app-content-wrapper #btn-edit-metadata").click(function () {
+      OC.dialogs.alert(
+        t("rds", "This application is currently under heavy development. " +
+          "Please use <a href=\"https://uts-eresearch.github.io/describo/\" target=\"_blank\">Describo</a> to describe your metadata on your local ownCloud-synchronized folder. " +
+          "Use the following <a href=\"https://www.research-data-services.org/metadata/sciebords-profile.json\" target=\"_blank\">schema file</a> as your profile schema."),
+        t("rds", "RDS Metadata")
+      );
+    });
+
 
     $("#app-content-wrapper #btn-save-research").click(function () {
       self.save().done(function () {
