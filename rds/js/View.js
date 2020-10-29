@@ -221,13 +221,27 @@
     });
 
     $("#app-content-wrapper #btn-edit-metadata").click(function () {
-      OC.dialogs.alert(
-        t("rds", "This application is currently under heavy development. " +
-          "Please use <a href=\"https://uts-eresearch.github.io/describo/\" target=\"_blank\">Describo</a> to describe your metadata on your local ownCloud-synchronized folder. " +
-          "Use the following <a href=\"https://www.research-data-services.org/metadata/sciebords-profile.json\" target=\"_blank\">schema file</a> as your profile schema."),
-        t("rds", "RDS Metadata")
+
+      if (!$('#rds_dialog').length) {
+        $('body').append('<div id="rds_dialog" title="Reseach data services"></div>');
+      }
+
+      $('#rds_dialog').attr('title', t("rds", "RDS Metadata"));
+      $('#rds_dialog').dialog();
+      $('#rds_dialog').css('width', '800px').css('height', '600px');
+      $('#rds_dialog').parent().css('width', '800px').css('height', '600px').css('top',
+        '100px').css('z-index', '9999');
+
+      $('#rds_dialog').parent().css('box-shadow', '0px 0px 0px #5151514D');
+      $('#rds_dialog').parent().css('moz-box-shadow', '0px 0px 0px #5151514D');
+      $('#rds_dialog').parent().css('-webkit-box-shadow', '0px 0px 0px #5151514D');
+
+      $('#rds_dialog').html(
+        t("rds", "This application is currently under heavy development.") + "<br /><br />" +
+        t("rds", "Please use <a href=\"https://uts-eresearch.github.io/describo/\" target=\"_blank\">Describo</a> to describe your metadata on your local ownCloud-synchronized folder. ") + "<br />" +
+        t("rds", "Use the following <a href=\"https://www.research-data-services.org/metadata/sciebords-profile.json\" target=\"_blank\">schema file</a> as your profile schema.")
       );
-    });
+    })
 
 
     $("#app-content-wrapper #btn-save-research").click(function () {
