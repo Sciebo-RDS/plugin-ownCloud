@@ -237,12 +237,17 @@
           self._select.add(option, 0);
 
           if (!selected) {
-            $(option).attr('selected', 'selected');
             selected = true;
+            $(option).attr('selected', 'selected');
+
+            self._btn.textContent = t("rds", "Authorize {servicename} now", {
+              servicename: self._select.options[select.selectedIndex].text,
+            });
+            self._btn.value = self._select.options[select.selectedIndex].value;
             self._btn.disabled = false;
+            self._select.selectedIndex = 0;
           }
 
-          self._select.selectedIndex = 0;
         });
       },
       renderButton: function () {
