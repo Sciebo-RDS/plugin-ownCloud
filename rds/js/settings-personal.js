@@ -241,9 +241,9 @@
             $(option).attr('selected', 'selected');
 
             self._btn.textContent = t("rds", "Authorize {servicename} now", {
-              servicename: self._select.options[select.selectedIndex].text,
+              servicename: self._select.options[self._select.selectedIndex].text,
             });
-            self._btn.value = self._select.options[select.selectedIndex].value;
+            self._btn.value = self._select.options[self._select.selectedIndex].value;
             self._btn.disabled = false;
             self._select.selectedIndex = 0;
           }
