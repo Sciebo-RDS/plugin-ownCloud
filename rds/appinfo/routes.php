@@ -39,7 +39,8 @@ return [
         ['name' => 'projects#create',           'url' => '/userservice/{servicename}/projects',             'verb' => 'POST'],
         ['name' => 'projects#destroy',          'url' => '/userservice/{servicename}/projects/{id}',        'verb' => 'DELETE'],
 
-        ['name' => 'Userservice#register',      'url' => '/oauth',                                          'verb' => 'GET']
+        ['name' => 'Userservice#register',      'url' => '/oauth',                                          'verb' => 'GET'],
+        ['name' => 'Userservice#mailaddress',   'url' => '/mailAddress',                                    'verb' => 'GET']
 
     ]
 ];
