@@ -28,15 +28,7 @@ foreach ($services as $service) {
     }
 }
 
-$logged_in = false;
-if (!empty($_['clients'])) {
-    foreach ($_['clients'] as $client) {
-        if (($client->getName() == $_["oauthname"]) and $found) {
-            $logged_in = true;
-            break;
-        }
-    }
-}
+$logged_in = $found;
 
 /** @var \OCA\OAuth2\Db\Client $client */
 ?>
