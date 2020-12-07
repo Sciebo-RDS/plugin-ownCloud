@@ -79,6 +79,7 @@ class UserserviceMapper
             $svc->setUserId($userId);
             $svc->setAccessToken($element['access_token']);
             $svc->setServiceProjects($element['projects']);
+            $svc->setInformations($element['informations']);
 
             $type = [];
             foreach ($element['implements'] as $value) {

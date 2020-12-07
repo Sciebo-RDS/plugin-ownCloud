@@ -45,6 +45,7 @@ class ServiceMapper
         $listOfServices = [];
 
         foreach ((array) $response as $element) {
+            $informations = $element["informations"];
             $jwt = $element['jwt'];
             # decode jwt
             $pieces = explode('.', $jwt);
@@ -56,6 +57,7 @@ class ServiceMapper
             $svc->setAuthorizeUrl(urldecode($payload['authorize_url']));
 
             $svc->setState($jwt);
+            $svc->setInformations($informations);
             $listOfServices[] = $svc;
         }
 
