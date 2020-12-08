@@ -10,7 +10,7 @@ use \OCA\RDS\Service\RDSService;
 use OCP\AppFramework\Http\RedirectResponse;
 use \OCA\OAuth2\Db\ClientMapper;
 use \OCP\ILogger;
-use OC\User\Session;
+use OC\User;
 
 use OCP\AppFramework\Http\TemplateResponse;
 
@@ -23,21 +23,21 @@ class UserserviceController extends Controller
     private $urlGenerator;
     private $rdsService;
     private $logger;
-    /** @var Session */
-    private $userSession;
+    /** @var User */
+    private $user;
 
     use Errors;
 
     public function __construct(
         $AppName,
         IRequest $request,
+        $userId,
         UserserviceportService $service,
         ClientMapper $clientMapper,
         IURLGenerator $urlGenerator,
-        $userId,
         RDSService $rdsService,
-        Session $userSession,
-        ILogger $logger
+        ILogger $logger,
+        User $user
     ) {
         parent::__construct($AppName, $request);
         $this->clientMapper = $clientMapper;
@@ -46,7 +46,7 @@ class UserserviceController extends Controller
         $this->urlGenerator = $urlGenerator;
         $this->rdsService = $rdsService;
         $this->logger = $logger;
-        $this->userSession = $userSession;
+        $this->user = $user;
     }
 
     /**
