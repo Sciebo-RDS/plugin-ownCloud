@@ -72,7 +72,13 @@ class UserserviceController extends Controller
     public function mailaddress()
     {
         return $this->handleNotFound(function () {
-            return ["email" => \OC::$server->getUserSession()->getUser()->getEMailAddress()];
+            $user = \OC::$server->getUserSession()->getUser();
+            $data = [
+                "email" => $user->getEMailAddress(),
+                "username" => $user->getUserName(),
+                "displayname" => $user->getDisplayName()
+            ];
+            return $data;
         });
     }
 
