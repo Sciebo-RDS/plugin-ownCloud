@@ -10,7 +10,6 @@ use \OCA\RDS\Service\RDSService;
 use OCP\AppFramework\Http\RedirectResponse;
 use \OCA\OAuth2\Db\ClientMapper;
 use \OCP\ILogger;
-use OCP\IUser;
 
 use OCP\AppFramework\Http\TemplateResponse;
 
@@ -23,8 +22,6 @@ class UserserviceController extends Controller
     private $urlGenerator;
     private $rdsService;
     private $logger;
-    /** @var User */
-    private $user;
 
     use Errors;
 
@@ -36,8 +33,7 @@ class UserserviceController extends Controller
         ClientMapper $clientMapper,
         IURLGenerator $urlGenerator,
         RDSService $rdsService,
-        ILogger $logger,
-        IUser $user
+        ILogger $logger
     ) {
         parent::__construct($AppName, $request);
         $this->clientMapper = $clientMapper;
@@ -46,7 +42,6 @@ class UserserviceController extends Controller
         $this->urlGenerator = $urlGenerator;
         $this->rdsService = $rdsService;
         $this->logger = $logger;
-        $this->user = $user;
     }
 
     /**
@@ -77,7 +72,7 @@ class UserserviceController extends Controller
     public function mailaddress()
     {
         return $this->handleNotFound(function () {
-            return ["email" => $this->user->getEMailAddress()];
+            return ["email" => \OC::$server->getUserSession()->getUser()->getEMailAddress()];
         });
     }
 
