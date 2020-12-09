@@ -316,7 +316,11 @@
                 saveCredentials(service, $("#cred_username").text(), $("#cred_password").text())
               })
             } else {
-              saveCredentials(service, "", "")
+              if (user === "") {
+                $.get(OC.generateUrl("apps/rds") + "/mailaddress").done((info) => {
+                  saveCredentials(service, info["email"], "");
+                })
+              }
             }
           } else {
             var win = window.open(
