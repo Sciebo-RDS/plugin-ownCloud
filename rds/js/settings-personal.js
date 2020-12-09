@@ -230,6 +230,11 @@
         });
 
         notUsedServices.forEach(function (item, index) {
+          if (item.informations == undefined) {
+            self._informations[item.servicename] = {};
+          } else {
+            self._informations[item.servicename] = item.informations;
+          }
           self._informations[item.servicename] = item.informations;
           self._authorizeUrl[item.servicename] = item.authorizeUrl + "&state=" + item.state + "FROMSETTINGS";
           var option = document.createElement("option");
