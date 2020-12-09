@@ -316,11 +316,9 @@
                 saveCredentials(service, $("#cred_username").text(), $("#cred_password").text())
               })
             } else {
-              if (user === "") {
-                $.get(OC.generateUrl("apps/rds") + "/informations").done((info) => {
-                  saveCredentials(service, info["email"], "");
-                })
-              }
+              $.get(OC.generateUrl("apps/rds") + "/informations").done((info) => {
+                saveCredentials(service, info["email"], "");
+              })
             }
           } else {
             var win = window.open(
