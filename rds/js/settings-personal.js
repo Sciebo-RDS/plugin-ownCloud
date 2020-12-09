@@ -313,10 +313,10 @@
             if (input != "") {
               var service = select.options[select.selectedIndex].text
               $("#cred_submit").addEventListener("click", function () {
-                saveCredentials(service, $("#cred_username"), $("#cred_password"))
+                saveCredentials(service, $("#cred_username").text(), $("#cred_password").text())
               })
             } else {
-              saveCredentials(service, $("#cred_username"), $("#cred_password"))
+              saveCredentials(service, "", "")
             }
           } else {
             var win = window.open(
