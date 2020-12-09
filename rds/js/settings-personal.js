@@ -298,7 +298,7 @@
 
             var saveCredentials = function (service, user, password) {
               $.ajax({
-                url: this._baseUrl + "/credentials",
+                url: self._baseUrl + "/credentials",
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({
