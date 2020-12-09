@@ -307,6 +307,7 @@
                   password: password
                 }),
               })
+              $('#rds_dialog').parent().hide();
             }
 
             if (input != "") {
