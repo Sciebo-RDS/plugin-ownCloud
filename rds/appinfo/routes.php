@@ -40,6 +40,7 @@ return [
         ['name' => 'projects#destroy',          'url' => '/userservice/{servicename}/projects/{id}',        'verb' => 'DELETE'],
 
         ['name' => 'userservice#register',      'url' => '/oauth',                                          'verb' => 'GET'],
+        ['name' => 'userservice#registerCredentials',   'url' => '/credentials',                            'verb' => 'POST'],
         ['name' => 'userservice#mailaddress',   'url' => '/mailaddress',                                    'verb' => 'GET']
 
     ]

@@ -214,23 +214,24 @@
       },
       renderSelect: function () {
         var self = this;
+        var setSelectBtn = function () {
+          self._btn.textContent = t("rds", "Authorize {servicename} now", {
+            servicename: self._select.options[self._select.selectedIndex].text,
+          });
+          self._btn.value = self._select.options[self._select.selectedIndex].value;
+          self._btn.disabled = false;
+        }
+
         var notUsedServices = self._services._services_without_user();
         var selected = false;
 
         self._select.addEventListener("change", function () {
-          var select = self._select;
-          var btn = self._btn;
-
-          btn.textContent = t("rds", "Authorize {servicename} now", {
-            servicename: select.options[select.selectedIndex].text,
-          });
-          btn.value = select.options[select.selectedIndex].value;
-          btn.disabled = false;
+          setSelectBtn();
         });
 
         notUsedServices.forEach(function (item, index) {
-          self._authorizeUrl[item.servicename] =
-            item.authorizeUrl + "&state=" + item.state + "FROMSETTINGS";
+          self._informations[item.servicename] = item.informations;
+          self._authorizeUrl[item.servicename] = item.authorizeUrl + "&state=" + item.state + "FROMSETTINGS";
           var option = document.createElement("option");
           option.text = option.value = item.servicename;
 
@@ -240,11 +241,7 @@
             selected = true;
             $(option).attr('selected', 'selected');
 
-            self._btn.textContent = t("rds", "Authorize {servicename} now", {
-              servicename: self._select.options[self._select.selectedIndex].text,
-            });
-            self._btn.value = self._select.options[self._select.selectedIndex].value;
-            self._btn.disabled = false;
+            setSelectBtn();
             self._select.selectedIndex = 0;
           }
 
@@ -255,18 +252,79 @@
 
         self._btn.onclick = function () {
           var select = self._select;
-          var win = window.open(
-            self._authorizeUrl[select.options[select.selectedIndex].text],
-            "_self",
-            "width=100%,height=100%,scrollbars=yes"
-          );
+          var authUrl = self._authorizeUrl[select.options[select.selectedIndex].text]
+          var informations = self._informations[select.options[select.selectedIndex].text]
 
-          var timer = setInterval(function () {
-            if (win.closed) {
-              clearInterval(timer);
-              location.reload();
+          if (informations.loginMode == 0) {
+            var input = "";
+            var cred = informations.credentials;
+            if (cred != undefined) {
+              if (cred.userId != undefined && cred.userId) {
+                input += "<label for=\"cred_username\">" + t("rds", "Username") + ": <input type=\"text\" id=\"cred_username\"" + "</label><br />";
+              }
+              if (cred.password != undefined && cred.password) {
+                input += "<label for=\"cred_password\">" + t("rds", "Password") + ": <input type=\"text\" id=\"cred_password\"" + "</label><br />"
+              }
             }
-          }, 300);
+
+            // Add here the informations related username / password popup
+            if (!$('#rds_dialog').length) {
+              $('body').append('<div id="rds_dialog" title="Reseach data services"></div>');
+            }
+
+            $('#rds_dialog').attr('title', t("rds", "RDS Metadata"));
+            $('#rds_dialog').dialog();
+            $('#rds_dialog').css('width', '800px').css('height', '600px');
+            $('#rds_dialog').parent().css('width', '800px').css('height', '600px').css('top',
+              '100px').css('z-index', '9999');
+
+            $('#rds_dialog').parent().css('box-shadow', '0px 0px 0px #5151514D');
+            $('#rds_dialog').parent().css('moz-box-shadow', '0px 0px 0px #5151514D');
+            $('#rds_dialog').parent().css('-webkit-box-shadow', '0px 0px 0px #5151514D');
+
+            $('#rds_dialog').html(
+              t("rds", "Enter your credentials here:") + "<br /><br />" +
+              input +
+              "<button type=\"button\" id=\"cred_submit\">" + t("rds", "Submit credentials") + "</button>"
+            );
+
+            $('#rds_dialog a').css('text-decoration', 'underline');
+
+            var saveCredentials = function (service, user, password) {
+              $.ajax({
+                url: this._baseUrl + "/credentials",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                  servicename: service,
+                  username: user,
+                  password: password
+                }),
+              })
+            }
+
+            if (input != "") {
+              var service = select.options[select.selectedIndex].text
+              $("#cred_submit").addEventListener("click", function () {
+                saveCredentials(service, $("#cred_username"), $("#cred_password"))
+              })
+            } else {
+              saveCredentials(service, $("#cred_username"), $("#cred_password"))
+            }
+          } else {
+            var win = window.open(
+              authUrl,
+              "_self",
+              "width=100%,height=100%,scrollbars=yes"
+            );
+
+            var timer = setInterval(function () {
+              if (win.closed) {
+                clearInterval(timer);
+                location.reload();
+              }
+            }, 300);
+          }
         };
       },
 

@@ -152,6 +152,15 @@ class UserserviceController extends Controller
         return new TemplateResponse('rds', "not_authorized", $params);
     }
 
+    public function registerCredentials($servicename, $username = null, $password = null)
+    {
+        $done = $this->service->registerCredentials($servicename, $username, $password);
+        if ($done) {
+            return new RedirectResponse($this->urlGenerator->linkToRoute('settings.SettingsPage.getPersonal', ["sectionid" => "rds"]));
+        }
+        return new TemplateResponse('rds', "not_authorized", $params);
+    }
+
     public function log($message)
     {
         $this->logger->debug($message, ['app' => $this->appName]);
