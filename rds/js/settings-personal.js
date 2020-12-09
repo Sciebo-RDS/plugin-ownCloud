@@ -298,7 +298,7 @@
 
             var saveCredentials = function (service, user, password) {
               $.ajax({
-                url: self._baseUrl + "/credentials",
+                url: OC.generateUrl("apps/rds") + "/credentials",
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({
