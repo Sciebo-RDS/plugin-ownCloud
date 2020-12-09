@@ -126,6 +126,7 @@
     var View = function (services) {
       this._services = services;
       this._authorizeUrl = {};
+      this._informations = {};
       this._btn = document.getElementById("svc-button");
       this._btn.disabled = true;
       this._select = document.getElementById("svc-selector");
