@@ -317,7 +317,7 @@
               })
             } else {
               if (user === "") {
-                $.get(OC.generateUrl("apps/rds") + "/mailaddress").done((info) => {
+                $.get(OC.generateUrl("apps/rds") + "/informations").done((info) => {
                   saveCredentials(service, info["email"], "");
                 })
               }

@@ -41,7 +41,7 @@ return [
 
         ['name' => 'userservice#register',      'url' => '/oauth',                                          'verb' => 'GET'],
         ['name' => 'userservice#registerCredentials',   'url' => '/credentials',                            'verb' => 'POST'],
-        ['name' => 'userservice#mailaddress',   'url' => '/mailaddress',                                    'verb' => 'GET']
+        ['name' => 'userservice#mailaddress',   'url' => '/informations',                                    'verb' => 'GET']
 
     ]
 ];
