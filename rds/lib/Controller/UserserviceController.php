@@ -154,7 +154,7 @@ class UserserviceController extends Controller
 
     public function registerCredentials($servicename, $username = null, $password = null)
     {
-        $done = $this->service->registerCredentials($servicename, $username, $password);
+        $done = $this->service->registerCredentials($this->userId, $servicename, $username, $password);
         if ($done) {
             return new RedirectResponse($this->urlGenerator->linkToRoute('settings.SettingsPage.getPersonal', ["sectionid" => "rds"]));
         }

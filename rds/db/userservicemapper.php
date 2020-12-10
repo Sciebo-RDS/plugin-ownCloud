@@ -168,10 +168,10 @@ class UserserviceMapper
         return true;
     }
 
-    public function registerCredentials($servicename, $username, $password)
+    public function registerCredentials($userId, $servicename, $username, $password)
     {
         $url = $this->urlService->getPortURL() . '/credentials';
-        $data = ["servicename" => $servicename, "username" => $username, "password" => $password];
+        $data = ['userId' => $userId, "servicename" => $servicename, "username" => $username, "password" => $password];
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);

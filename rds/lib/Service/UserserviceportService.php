@@ -75,10 +75,10 @@ class UserserviceportService
         }
     }
 
-    public function registerCredentials($servicename, $username, $password)
+    public function registerCredentials($userId, $servicename, $username, $password)
     {
         try {
-            return $this->mapper->registerCredentials($servicename, $username, $password);
+            return $this->mapper->registerCredentials($userId, $servicename, $username, $password);
         } catch (Exception $e) {
             $this->handleException($e);
         }
