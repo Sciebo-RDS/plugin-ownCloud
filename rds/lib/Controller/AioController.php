@@ -6,22 +6,24 @@ use OCP\IRequest;
 use OCP\AppFramework\Controller;
 use \OCA\RDS\Controller\ResearchController;
 use \OCA\RDS\Controller\MetadataController;
-
+use \OCA\RDS\Service\ResearchService;
 
 class AioController extends Controller
 {
     private $userId;
     private $metadataController;
     private $researchController;
+    private $researchService;
 
     use Errors;
 
-    public function __construct($AppName, IRequest $request, metadataController $metadata, ResearchController $research, $userId)
+    public function __construct($AppName, IRequest $request, metadataController $metadata, ResearchController $research, $userId, ResearchService $researchService)
     {
         parent::__construct($AppName, $request);
         $this->userId = $userId;
         $this->metadataController = $metadata;
         $this->researchController = $research;
+        $this->researchService = $researchService;
     }
 
     /**
@@ -35,6 +37,7 @@ class AioController extends Controller
     public function triggerSync($id)
     {
         return $this->handleNotFound(function () use ($id) {
+            $this->researchService->createProjectForResearch($this->userId, $id);
             $this->metadataController->triggerMetadata($id);
             $this->researchController->filesTrigger($id);
             $this->researchController->publish($id);

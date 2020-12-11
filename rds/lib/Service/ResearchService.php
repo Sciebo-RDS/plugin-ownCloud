@@ -150,7 +150,7 @@ class ResearchService
         return $folders;
     }
 
-    private function createProjectForResearch($userId, $id)
+    public function createProjectForResearch($userId, $id)
     {
         // TODO: Create here the projects in configured services.
         $conn = $this->mapper->find($id, $userId);
@@ -217,8 +217,6 @@ class ResearchService
             if (!$found) {
                 return false;
             }
-
-            $this->createProjectForResearch($userId, $id);
 
             if ($filename != null) {
                 // TODO: trigger export for specific file in research for userId and researchIndex
