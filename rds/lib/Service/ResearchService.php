@@ -12,16 +12,22 @@ use OCP\ILogger;
 use \OCA\RDS\Db\Port;
 use \OCA\RDS\Db\Research;
 use \OCA\RDS\Db\ResearchMapper;
+use \OCA\RDS\Controller\ProjectsController;
+use \OCA\RDS\Db\UserserviceMapper;
 
 class ResearchService
 {
     private $mapper;
+    private $projects;
+    private $service;
 
-    public function __construct(ILogger $logger, $appName, ResearchMapper $mapper)
+    public function __construct(ILogger $logger, $appName, ResearchMapper $mapper, ProjectsController $projects, UserserviceMapper $service)
     {
         $this->mapper = $mapper;
         $this->appName = $appName;
         $this->logger = $logger;
+        $this->projects = $projects;
+        $this->service = $service;
     }
 
     public function log($message, $arr)
@@ -144,6 +150,39 @@ class ResearchService
         return $folders;
     }
 
+    private function createProjectForResearch($userId, $id)
+    {
+        // TODO: Create here the projects in configured services.
+        $conn = $this->mapper->find($id, $userId);
+        foreach ($conn->getportOut() as $port) {
+            $found = false;
+            $properties = $port->getProperties();
+            foreach ($properties as $prop) {
+                if ($prop["portType"] == "customProperties") {
+                    foreach ($prop["value"] as $type) {
+                        if ($type == "projectId") {
+                            $found = true;
+                        }
+                    }
+                }
+            }
+            if (!$found) {
+                try {
+                    $project = $this->projects->create($port->getPort());
+                    $properties[] = [
+                        "key" => "projectId",
+                        "value" => $project->getProjectId()
+                    ];
+                } catch (\Throwable $th) {
+                }
+                $port->setProperties($properties);
+            }
+        }
+        $this->mapper->update($conn);
+
+        return true;
+    }
+
     public function updateFiles($userId, $id = null, $filename = null)
     {
         function startsWith($string, $startString)
@@ -176,7 +215,7 @@ class ResearchService
                 return false;
             }
 
-            $settings = $this->getSettings($userId, $id);
+            $this->createProjectForResearch($userId, $id);
 
             if ($filename != null) {
                 // TODO: trigger export for specific file in research for userId and researchIndex

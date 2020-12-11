@@ -312,9 +312,6 @@
 
     portIn.push(owncloudPort);
 
-    var deferreds = []
-    var results = []
-
     $(".metadata-service input").each(function (index, obj) {
       var $this = $(obj)
       var servicename = $this.data("service")
@@ -322,11 +319,16 @@
 
       if ($this.is(":checked")) {
         if (prechecked === undefined) {
-          var def = self._services.createProject(servicename)
-          def.done(function (res) {
-            results.push(res)
-          })
-          deferreds.push(def)
+          var servicePort = {
+            port: servicename,
+            properties: [
+              {
+                portType: "metadata",
+                value: true
+              }
+            ]
+          };
+          portOut.push(servicePort);
         } else {
           var servicePort = {
             port: "port-" + servicename.toLowerCase(),
@@ -348,30 +350,7 @@
         }
       }
     })
-
-    return $.when.apply($, deferreds).done(function () {
-      results.forEach(function (project) {
-        var servicePort = {
-          port: project.portName,
-          properties: [
-            {
-              portType: "metadata",
-              value: true
-            },
-            {
-              portType: "customProperties",
-              value: [{
-                key: "projectId",
-                value: project.projectId.toString()
-              }],
-            }
-          ]
-        };
-        portOut.push(servicePort);
-      })
-    }).done(function () {
-      return self._studies.updateActive(portIn, portOut)
-    })
+    return self._studies.updateActive(portIn, portOut);
   };
 
   OC.rds.View = function (studies, services, files) {
