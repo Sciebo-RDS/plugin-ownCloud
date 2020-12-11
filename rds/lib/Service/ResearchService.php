@@ -160,7 +160,7 @@ class ResearchService
             foreach ($properties as $prop) {
                 if ($prop["portType"] == "customProperties") {
                     foreach ($prop["value"] as $type) {
-                        if ($type == "projectId") {
+                        if ($type["key"] == "projectId") {
                             $found = true;
                         }
                     }
@@ -170,8 +170,11 @@ class ResearchService
                 try {
                     $project = $this->projects->create($port->getPort());
                     $properties[] = [
-                        "key" => "projectId",
-                        "value" => $project->getProjectId()
+                        "portType" => "customProperties",
+                        "value" => [[
+                            "key" => "projectId",
+                            "value" => $project->getProjectId()
+                        ]]
                     ];
                 } catch (\Throwable $th) {
                 }
