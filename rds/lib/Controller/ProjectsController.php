@@ -59,7 +59,7 @@ class ProjectsController extends Controller
     /**
      * Add a single project in service from user.
      *
-     * @param string $id
+     * @param $servicename
      * @return object an object with jwt encoded object with keys
      * 'id', 'authorize_url', 'date'
      *

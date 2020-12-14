@@ -37,11 +37,12 @@ class AioController extends Controller
     public function triggerSync($id)
     {
         return $this->handleNotFound(function () use ($id) {
+            # TODO: Bug here from filesTrigger, and createProject not registering the project in research
             $this->researchService->createProjectForResearch($this->userId, $id);
             $this->metadataController->triggerMetadata($id);
             $this->researchController->filesTrigger($id);
             $this->researchController->publish($id);
-            return TRUE;
+            return true;
         });
     }
 }

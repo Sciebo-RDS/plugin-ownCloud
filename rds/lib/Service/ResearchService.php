@@ -154,6 +154,7 @@ class ResearchService
     {
         // TODO: Create here the projects in configured services.
         $conn = $this->mapper->find($id, $userId);
+        $index = 0;
         foreach ($conn->getportOut() as $port) {
             $found = false;
             $properties = $port->getProperties();
@@ -162,6 +163,7 @@ class ResearchService
                     foreach ($prop["value"] as $type) {
                         if ($type["key"] == "projectId") {
                             $found = true;
+                            break 2;
                         }
                     }
                 }
@@ -169,17 +171,14 @@ class ResearchService
             if (!$found) {
                 try {
                     $project = $this->projects->create($port->getPort());
-                    $properties[] = [
-                        "portType" => "customProperties",
-                        "value" => [[
-                            "key" => "projectId",
-                            "value" => $project->getProjectId()
-                        ]]
-                    ];
+                    $conn->getportOut()[$index]->addProperty("customProperties", [[
+                        "key" => "projectId",
+                        "value" => $project->getProjectId()
+                    ]]);
                 } catch (\Throwable $th) {
                 }
-                $port->setProperties($properties);
             }
+            $index += 1;
         }
         $this->mapper->update($conn);
 
