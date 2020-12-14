@@ -171,15 +171,18 @@ class ResearchService
             if (!$found) {
                 try {
                     $project = $this->projects->create($port->getPort());
-                    $conn->getportOut()[$index]->addProperty("customProperties", [[
+                    $portOut = $conn->getportOut()[$index];
+                    $portOut->addProperty("customProperties", [[
                         "key" => "projectId",
                         "value" => $project->getProjectId()
                     ]]);
+                    $this->log("ports: {}", $portOut);
                 } catch (\Throwable $th) {
                 }
             }
             $index += 1;
         }
+        $this->log("connection: {}", $conn);
         $this->mapper->update($conn);
 
         return true;
