@@ -176,13 +176,13 @@ class ResearchService
                         "key" => "projectId",
                         "value" => $project->getProjectId()
                     ]]);
-                    $this->log("ports: {}", $portOut);
+                    $this->log("ports: {portOut}", ["portOut" => $portOut]);
                 } catch (\Throwable $th) {
                 }
             }
             $index += 1;
         }
-        $this->log("connection: {}", $conn);
+        $this->log("connection: {conn}", ["conn" => $conn]);
         $this->mapper->update($conn);
 
         return true;
