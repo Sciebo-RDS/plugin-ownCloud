@@ -178,7 +178,8 @@ class ResearchService
                         "value" => $project->getProjectId()
                     ]]);
 
-                    $this->update($conn->getUserId(), $conn->getResearchIndex(), $conn->getportIn(), $portOuts, $conn->getStatus());
+                    #$this->update($conn->getUserId(), $conn->getResearchIndex(), $conn->getportIn(), $portOuts, $conn->getStatus());
+                    $conn->setportOut($portOuts);
                     $this->log("ports: {portOut}", ["portOut" => $portOuts]);
                 } catch (\Throwable $th) {
                     $this->log("error while creating: {err}", ["err" => $th]);
@@ -187,7 +188,7 @@ class ResearchService
             $index += 1;
         }
         $this->log("connection: {conn}", ["conn" => $conn]);
-        #$this->mapper->update($conn);
+        $this->mapper->update($conn);
 
         return true;
     }
