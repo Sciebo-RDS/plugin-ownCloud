@@ -171,19 +171,23 @@ class ResearchService
             if (!$found) {
                 try {
                     $project = $this->projects->create($port->getPort());
-                    $portOut = $conn->getportOut()[$index];
-                    $portOut->addProperty("customProperties", [[
+                    $portOuts = $conn->getportOut();
+
+                    $portOuts[$index]->addProperty("customProperties", [[
                         "key" => "projectId",
                         "value" => $project->getProjectId()
                     ]]);
-                    $this->log("ports: {portOut}", ["portOut" => $portOut]);
+
+                    $this->update($conn->getUserId(), $conn->getResearchIndex(), $conn->getportIn(), $portOuts, $conn->getStatus());
+                    $this->log("ports: {portOut}", ["portOut" => $portOuts]);
                 } catch (\Throwable $th) {
+                    $this->log("error while creating: {err}", ["err" => $th]);
                 }
             }
             $index += 1;
         }
         $this->log("connection: {conn}", ["conn" => $conn]);
-        $this->mapper->update($conn);
+        #$this->mapper->update($conn);
 
         return true;
     }
