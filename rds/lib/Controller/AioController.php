@@ -29,7 +29,7 @@ class AioController extends Controller
     /**
      * Trigger RDS System to synchronize metadata and files in services
      *
-     * @param integer $id
+     * @param integer $id have to be a researchIndex
      * @return string returns True if success. Otherwise False
      *
      * @NoAdminRequired
