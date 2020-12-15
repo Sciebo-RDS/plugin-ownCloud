@@ -12,7 +12,7 @@ use OCP\ILogger;
 use \OCA\RDS\Db\Port;
 use \OCA\RDS\Db\Research;
 use \OCA\RDS\Db\ResearchMapper;
-use \OCA\RDS\Controller\ProjectsController;
+use \OCA\RDS\Service\ProjectsService;
 use \OCA\RDS\Db\UserserviceMapper;
 
 class ResearchService
@@ -21,7 +21,7 @@ class ResearchService
     private $projects;
     private $service;
 
-    public function __construct(ILogger $logger, $appName, ResearchMapper $mapper, ProjectsController $projects, UserserviceMapper $service)
+    public function __construct(ILogger $logger, $appName, ResearchMapper $mapper, ProjectsService $projects, UserserviceMapper $service)
     {
         $this->mapper = $mapper;
         $this->appName = $appName;
@@ -170,7 +170,7 @@ class ResearchService
             }
             if (!$found) {
                 try {
-                    $project = $this->projects->create($port->getPort());
+                    $project = $this->projects->insert($userId, $port->getPort());
                     $portOuts = $conn->getportOut();
 
                     $portOuts[$index]->addProperty("customProperties", [[
