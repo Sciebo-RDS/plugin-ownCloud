@@ -142,7 +142,7 @@ class ResearchController extends Controller
      * @return boolean True, if Trigger was successful. False otherwise.
      * @NoAdminRequired
      */
-    public function filesTrigger($id, $filename = null)
+    public function  filesTrigger($id, $filename = null)
     {
         return $this->handleNotFound(function () use ($id, $filename) {
             return $this->service->updateFiles($this->userId, $id, $filename);

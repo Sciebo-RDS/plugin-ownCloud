@@ -4,26 +4,23 @@ namespace OCA\RDS\Controller;
 
 use OCP\IRequest;
 use OCP\AppFramework\Controller;
-use \OCA\RDS\Controller\ResearchController;
-use \OCA\RDS\Controller\MetadataController;
+use \OCA\RDS\Service\MetadataService;
 use \OCA\RDS\Service\ResearchService;
 
 class AioController extends Controller
 {
     private $userId;
-    private $metadataController;
-    private $researchController;
-    private $researchService;
+    private $metadata;
+    private $research;
 
     use Errors;
 
-    public function __construct($AppName, IRequest $request, metadataController $metadata, ResearchController $research, $userId, ResearchService $researchService)
+    public function __construct($AppName, IRequest $request, MetadataService $metadata, ResearchService $research, $userId)
     {
         parent::__construct($AppName, $request);
         $this->userId = $userId;
-        $this->metadataController = $metadata;
-        $this->researchController = $research;
-        $this->researchService = $researchService;
+        $this->metadata = $metadata;
+        $this->research = $research;
     }
 
     /**
@@ -38,10 +35,10 @@ class AioController extends Controller
     {
         return $this->handleNotFound(function () use ($id) {
             # TODO: Bug here from filesTrigger, and createProject not registering the project in research
-            $this->researchService->createProjectForResearch($this->userId, $id);
-            $this->metadataController->triggerMetadata($id);
-            $this->researchController->filesTrigger($id);
-            $this->researchController->publish($id);
+            $this->research->createProjectForResearch($this->userId, $id);
+            $this->metadata->triggerUpdate($this->userId, $id);
+            $this->research->updateFiles($this->userId, $id);
+            $this->research->publish($this->userId, $id);
             return true;
         });
     }
