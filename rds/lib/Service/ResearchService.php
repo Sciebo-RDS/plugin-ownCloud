@@ -202,12 +202,12 @@ class ResearchService
         }
 
         try {
-            if ($id == null && $filename == null) {
+            if ($id === null && $filename === null) {
                 throw new Exception('no researchIndex or filename were given');
             }
 
             $found = false;
-            if ($filename != null && $id == null) {
+            if ($filename !== null && $id === null) {
                 $folders = $this->getFolders($userId);
                 foreach ($folders as $folder) {
                     if (startsWith($filename, $folder['path'])) {
