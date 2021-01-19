@@ -161,7 +161,7 @@
                   );
                 })
                 .always(function () {
-                  if (servicename === "Owncloud") {
+                  if (servicename === "owncloud") {
                     $.ajax({
                       type: "DELETE",
                       url: self._services._baseUrl + "/research",

@@ -178,7 +178,7 @@
             var filepath = undefined;
             for (let index = 0; index < services.length; index++) {
                 const element = services[index];
-                if (element.servicename !== "Owncloud") {
+                if (element.servicename !== "owncloud") {
                     newServicesList.push(element)
                 } else {
                     if (element.filepath !== undefined) {
@@ -303,7 +303,7 @@
         }
 
         var owncloudPort = {
-            port: "port-" + "Owncloud".toLowerCase(),
+            port: "port-" + "owncloud",
             properties: [
                 {
                     portType: "fileStorage",
