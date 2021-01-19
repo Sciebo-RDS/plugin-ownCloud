@@ -63,11 +63,11 @@
     var zenodo = undefined;
 
     services.getServices().forEach(function (service) {
-      if (service.servicename === "Owncloud") {
+      if (service.servicename === "owncloud") {
         owncloud = service;
       }
 
-      if (service.servicename === "Zenodo") {
+      if (service.servicename === "zenodo") {
         zenodo = service;
       }
     });
