@@ -180,7 +180,7 @@
         var source = $("#serviceStable > tbody:last-child");
 
         this._services._user_services.forEach(function (item, index) {
-          if (item["servicename"] !== "Owncloud") {
+          if (item["servicename"] !== "owncloud") {
             source.append(
               "<tr><td>" +
               item["servicename"] +
@@ -209,7 +209,7 @@
         }
 
         $("#owncloud-button-removal").click(function () {
-          self.removeServiceFromUser("Owncloud");
+          self.removeServiceFromUser("owncloud");
           return false;
         });
       },

@@ -138,7 +138,7 @@ class UserserviceController extends Controller
             $state = str_replace("FROMSETTINGS", "", $state, $settings);
             $this->log("state: " . $state);
 
-            $result = $this->service->register("Owncloud", $code, $state, $this->userId, $secret);
+            $result = $this->service->register("owncloud", $code, $state, $this->userId, $secret);
             if (!$result) {
                 $params["error"] = "register was not successful";
             }
