@@ -261,9 +261,10 @@
           var authUrl = self._authorizeUrl[select.options[select.selectedIndex].text]
           var informations = self._informations[select.options[select.selectedIndex].text]
 
-          if (informations.loginMode == 0) {
+          if (informations.credentials != undefined) {
             var input = "";
             var cred = informations.credentials;
+            console.log(cred)
             if (cred != undefined) {
               if (cred.userId != undefined && cred.userId) {
                 input += "<label for=\"cred_username\">" + t("rds", "Username") + ": <input type=\"text\" id=\"cred_username\"" + "</label><br />";
