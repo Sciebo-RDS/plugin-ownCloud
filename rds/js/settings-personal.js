@@ -313,7 +313,7 @@
 
             var service = select.options[select.selectedIndex].text
             if (input != "") {
-              $("#cred_submit").addEventListener("click", function () {
+              $("#cred_submit")[0].addEventListener("click", function () {
                 saveCredentials(service, $("#cred_username").text(), $("#cred_password").text())
               })
             } else {
