@@ -314,7 +314,7 @@
             var service = select.options[select.selectedIndex].text
             if (input != "") {
               $("#cred_submit")[0].addEventListener("click", function () {
-                saveCredentials(service, $("#cred_username").text(), $("#cred_password").text())
+                saveCredentials(service, $("#cred_username").value, $("#cred_password").value)
               })
             } else {
               $.get(OC.generateUrl("apps/rds") + "/informations").done((info) => {
