@@ -99,6 +99,9 @@
       removeServiceFromUser: function (servicename) {
         var deferred = $.Deferred();
         var self = this;
+        if (!servicename.startsWith("port-")) {
+          servicename = "port-" + servicename
+        }
 
         $.ajax({
           type: "DELETE",
@@ -180,7 +183,7 @@
         var source = $("#serviceStable > tbody:last-child");
 
         this._services._user_services.forEach(function (item, index) {
-          if (item["servicename"] !== "owncloud") {
+          if (item["servicename"] !== "port-owncloud") {
             source.append(
               "<tr><td>" +
               item["servicename"] +
