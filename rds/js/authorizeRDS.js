@@ -3,7 +3,7 @@
 
   $(document).ready(function () {
     $.ajax({
-      url: OC.generateUrl("apps/rds") + "/service/Owncloud",
+      url: OC.generateUrl("apps/rds") + "/service/port-owncloud",
       success: function (result) {
         if (result.isOk == false) return;
         var state = result["state"];
