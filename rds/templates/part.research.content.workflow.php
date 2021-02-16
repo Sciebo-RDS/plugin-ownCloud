@@ -9,7 +9,7 @@
     <?php p($l->t('Please select a folder where you want to take your files from.')); ?>
   </p>
   <div class="fileStorage-wrapper">
-    <label><button id="btn-open-folderpicker" data-service="owncloud"><?php p($l->t('Select folder')); ?></button>
+    <label><button id="btn-open-folderpicker" data-service="port-owncloud"><?php p($l->t('Select folder')); ?></button>
       <span id="filepath">
         {{#if filepath }}
         <?php p($l->t('Current path:')); ?>

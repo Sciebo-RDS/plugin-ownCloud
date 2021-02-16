@@ -164,7 +164,7 @@
                   );
                 })
                 .always(function () {
-                  if (servicename === "owncloud") {
+                  if (servicename === "port-owncloud") {
                     $.ajax({
                       type: "DELETE",
                       url: self._services._baseUrl + "/research",
@@ -212,7 +212,7 @@
         }
 
         $("#owncloud-button-removal").click(function () {
-          self.removeServiceFromUser("owncloud");
+          self.removeServiceFromUser("port-owncloud");
           return false;
         });
       },

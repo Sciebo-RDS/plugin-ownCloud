@@ -22,7 +22,7 @@ $found = false;
 $services = getRegisteredServicesForUser($_["rdsURL"], $_['user_id']);
 
 foreach ($services as $service) {
-    if ($service->servicename == "owncloud") {
+    if ($service->servicename == "port-owncloud") {
         $found = true;
         break;
     }
