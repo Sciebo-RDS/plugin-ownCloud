@@ -336,7 +336,7 @@ class ResearchMapper
     public function createPort($port)
     {
         $pport = new Port();
-        $pport->setPort(ucfirst((str_replace('port-', '', $port['port']))));
+        $pport->setPort($port['port']);
 
         foreach ($port['properties'] as $prop) {
             $portType = $prop['portType'];

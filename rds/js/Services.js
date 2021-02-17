@@ -59,7 +59,7 @@
         .done(function (proj) {
           console.log(proj);
           var data = {
-            portName: "port-" + servicename.toLowerCase(),
+            portName: servicename.toLowerCase(),
             projectId: proj.projectId,
             servicename: servicename
           }

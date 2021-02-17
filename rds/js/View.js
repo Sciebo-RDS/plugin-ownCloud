@@ -303,7 +303,7 @@
         }
 
         var owncloudPort = {
-            port: "port-" + "port-owncloud",
+            port: "port-owncloud",
             properties: [
                 {
                     portType: "fileStorage",
@@ -340,7 +340,7 @@
                     portOut.push(servicePort);
                 } else {
                     var servicePort = {
-                        port: "port-" + servicename.toLowerCase(),
+                        port: servicename.toLowerCase(),
                         properties: [
                             {
                                 portType: "metadata",
@@ -407,7 +407,7 @@
                 return studies;
             }
 
-            var html = template({studies: patch(this._studies.getAll())});
+            var html = template({ studies: patch(this._studies.getAll()) });
 
             $("#app-navigation ul").html(html);
 
@@ -486,7 +486,7 @@
         render: function () {
             this.renderNavigation();
             this.renderContent();
-            $(".icon-info").tipsy({gravity: "w"});
+            $(".icon-info").tipsy({ gravity: "w" });
         },
         loadAll: function () {
             var self = this;
