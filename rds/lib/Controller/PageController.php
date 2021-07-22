@@ -19,7 +19,7 @@ use Exception;
 
 class PageController extends Controller
 {
-    private $userserviceMapper;
+    private $userservice;
     private $userId;
 
     public function __construct($AppName, IRequest $request,  UserserviceportService $userservice, $userId)
